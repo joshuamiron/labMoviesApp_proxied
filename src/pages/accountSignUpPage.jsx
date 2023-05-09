@@ -12,8 +12,6 @@ const SignUpPage = props => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-
-
   const register = () => {
     if (password.length > 0 && password === passwordAgain) {
       console.log("reg")

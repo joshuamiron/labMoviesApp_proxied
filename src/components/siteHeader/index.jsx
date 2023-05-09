@@ -8,11 +8,14 @@ import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Grid from "@mui/material/Grid";
-import AuthContext from "../../contexts/authContext";
+
+import { AuthContext } from "../../contexts/authContext";
+import LoginModal from "../accountLoginModal";
+import SignUpModal from "../accountSignUpModal";
 
 
 const styles = {
@@ -28,8 +31,25 @@ const styles = {
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader = () => {
+  const context = useContext(AuthContext);
   const navigate = useNavigate();
-  //const { isAuthenticated } = useContext(AuthContext); 
+  const location = useLocation();
+  const { isAuthenticated } = context;
+  console.log("isAuthenticated = " + isAuthenticated);
+
+  //--- stuff for login modal
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+  const handleLoginModalOpen = () => {
+    setLoginModalOpen(true);
+  };
+  const handleLoginModalClose = () => { setLoginModalOpen(false); };
+
+  //--- stuff for sign up modal
+  const [isSignUpModalOpen, setSignUpModalOpen] = useState(false);
+  const handleSignUpModalOpen = () => {
+    setSignUpModalOpen(true);
+  };
+  const handleSignUpModalClose = () => { setSignUpModalOpen(false); };
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [movieAnchorEl, setMovieAnchorEl] = useState(null);
@@ -47,11 +67,6 @@ const SiteHeader = () => {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
-
-  //----- Un-nested menu items (Home)
-  const menuOptions = [
-    { label: "Home", path: "/" },
-  ];
 
   //----- All menu items displayed as a flat list for mobile
   const mobileMenuOptions = [
@@ -88,31 +103,38 @@ const SiteHeader = () => {
   ];
 
   const peopleMenuOptions = [
-    //{ label: "Home", path: "/" },
     { label: "Trending People", path: "/people/trending" },
     { label: "Popular People", path: "/people/popular" },
   ];
 
-   const myAccountMenuOptions = [
-    //{ label: "Home", path: "/" },
+    /*const myAccountMenuOptions = [
     { label: "Log In", path: "/login" },
     { label: "Log Out", path: "/logout" },
     { label: "Update Account", path: "/edit" },
     { label: "Create New Account", path: "/signup" },
-  ]; 
+  ];*/
 
-  /*const myAccountMenuOptions = isAuthenticated ?
+const myAccountMenuOptions = context.isAuthenticated ?
+
     [
-      { label: "Log Out", path: "/accounts/logout" },
-      { label: "Update Account", path: "/accounts/edit" },
+      { label: "Log Out", path: "/logout" },
+      { label: "Update Account", path: "/edit" },
     ]
     : [
-      { label: "Log In", path: "/account/login" },
-      { label: "Create New Account", path: "/accounts/signup" },
-    ];*/
+      { label: "Log In", path: "/login" },
+      { label: "Create New Account", path: "/signup" },
+    ];
 
   const handleMenuSelect = (pageURL) => {
-    navigate(pageURL);
+    //if (pageURL === "/login") {
+    //  handleLoginModalOpen();
+    //}
+   // else if (pageURL === "/signup") {
+   //   handleSignUpModalOpen();
+   // }
+    //else {
+      navigate(pageURL);
+   // }
   };
 
   const handleMenu = (event) => {
@@ -208,16 +230,6 @@ const SiteHeader = () => {
             </>
           ) : (
             <>
-              {/*{menuOptions.map((opt) => (
-                <Button
-                  key={opt.label}
-                  color="inherit"
-                  onClick={() => handleMenuSelect(opt.path)}
-                >
-                  {opt.label}
-                </Button>
-              ))}*/}
-
               <Grid>
                 <Button
                   onClick={handleMovieClick} color="inherit">
@@ -309,8 +321,11 @@ const SiteHeader = () => {
 
             </>
           )}
+          {/*<LoginModal open={isLoginModalOpen} handleClose={handleLoginModalClose} />
+          <SignUpModal open={isSignUpModalOpen} handleClose={handleSignUpModalClose} />*/}
         </Toolbar>
       </AppBar>
+
       <Offset />
 
       {/* <div className={classes.offset} /> */}
