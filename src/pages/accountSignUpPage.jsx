@@ -1,42 +1,69 @@
 import React, { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import { FormControl, FormGroup, Typography } from "@mui/material";
 import { Grid } from "@mui/material";
 
-import { AuthContext } from '../contexts/authContext';
+import { AuthContext } from "../contexts/authContext";
 
-const SignUpPage = props => {
-  const context = useContext(AuthContext)
+const SignUpPage = (props) => {
+  const context = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
   const [registered, setRegistered] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const register = () => {
     if (password.length > 0 && password === passwordAgain) {
-      console.log("reg")
+      console.log("reg");
       context.register(email, password, firstName, lastName);
       setRegistered(true);
     }
-  }
+  };
+
+ /* const register = async () => {
+    setErrorMessage(""); // Reset the error message
+    if (password.length > 0 && password === passwordAgain) {
+      try {
+        await context.register(email, password, firstName, lastName);
+        setRegistered(true);
+      } catch (error) {
+        //setErrorMessage(error.response.data.message); // Set the error message from the response
+        if (error.response && error.response.status === 409) {
+          setErrorMessage('Account already exists');
+        } else {
+          setErrorMessage('Registration failed');
+        }
+      }
+    }
+  };*/
+
 
   // const { from } = props.location.state || { from: { pathname: "/" } };
 
   if (registered === true) {
-    return <Navigate to="./home" />;
+    if (context.isAuthenticated === true) {
+    }
+    return <Navigate to="/login" />;
   }
 
   return (
     <>
-      <Grid container justifyContent="center" alignItems="center" style={{ marginTop: "50px" }}  >
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        style={{ marginTop: "50px" }}
+      >
         <FormControl>
           <Typography variant="h5">Sign up</Typography>
-          <br /><br />
+          <br />
+          <br />
           <TextField
             autoFocus
             margin="dense"
@@ -45,6 +72,7 @@ const SignUpPage = props => {
             fullWidth
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
+            style={{ width: "300px" }} // Set a fixed width for the text field
           />
           <TextField
             margin="dense"
@@ -53,6 +81,7 @@ const SignUpPage = props => {
             fullWidth
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
+            style={{ width: "300px" }} // Set a fixed width for the text field
           />
           <TextField
             margin="dense"
@@ -62,6 +91,7 @@ const SignUpPage = props => {
             fullWidth
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            style={{ width: "300px" }} // Set a fixed width for the text field
           />
           <TextField
             margin="dense"
@@ -71,6 +101,7 @@ const SignUpPage = props => {
             fullWidth
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            style={{ width: "300px" }} // Set a fixed width for the text field
           />
           <TextField
             margin="dense"
@@ -80,12 +111,17 @@ const SignUpPage = props => {
             fullWidth
             value={passwordAgain}
             onChange={(e) => setPasswordAgain(e.target.value)}
+            style={{ width: "300px" }} // Set a fixed width for the text field
           />
           <br />
-          <Button variant="outlined" onClick={register}>Create account</Button>
-          <br /><br />
-          <Typography>Already have an account?{" "}
-            <Link to="/login">Log in!</Link></Typography>
+          <Button variant="outlined" onClick={register}>
+            Create account
+          </Button>
+          <br />
+          <br />
+          <Typography>
+            Already have an account? <Link to="/login">Log in!</Link>
+          </Typography>
         </FormControl>
       </Grid>
     </>
