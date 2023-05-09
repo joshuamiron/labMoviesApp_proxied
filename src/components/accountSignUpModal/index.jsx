@@ -82,7 +82,7 @@ const SignUpModal = ({ open, handleClose }) => {
                         label="Confirm password"
                         type="confirm password"
                         fullWidth
-                        value={password}
+                        value={passwordAgain}
                         onChange={(e) => setPasswordAgain(e.target.value)}
                     />
                     <br /><br />

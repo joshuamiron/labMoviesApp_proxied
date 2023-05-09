@@ -118,7 +118,7 @@ const myAccountMenuOptions = context.isAuthenticated ?
 
     [
       { label: "Log Out", path: "/logout" },
-      { label: "Update Account", path: "/edit" },
+      //{ label: "Update Account", path: "/edit" },
     ]
     : [
       { label: "Log In", path: "/login" },
@@ -132,9 +132,13 @@ const myAccountMenuOptions = context.isAuthenticated ?
    // else if (pageURL === "/signup") {
    //   handleSignUpModalOpen();
    // }
-    //else {
+   if (pageURL === "/logout") {
+    context.signout();
+    navigate("/login");
+   }
+    else {
       navigate(pageURL);
-   // }
+    }
   };
 
   const handleMenu = (event) => {

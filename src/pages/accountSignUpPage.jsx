@@ -1,7 +1,12 @@
 import React, { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { AuthContext } from '../contexts/authContext';
 import { Link } from "react-router-dom";
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import { FormControl, FormGroup, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
+
+import { AuthContext } from '../contexts/authContext';
 
 const SignUpPage = props => {
   const context = useContext(AuthContext)
@@ -28,27 +33,61 @@ const SignUpPage = props => {
 
   return (
     <>
-      <h2>Sign up</h2>
-      <p>You must create an account to log in </p>
-      <input value={firstName} id="first name" placeholder="first name" onChange={e => {
-        setFirstName(e.target.value);
-      }}></input><br /><br />
-      <input value={lastName} id="last name" placeholder="last name" onChange={e => {
-        setLastName(e.target.value);
-      }}></input><br /><br />
-      <input id="email" value={email} placeholder="email" onChange={e => {
-        setEmail(e.target.value);
-      }}></input><br /><br />
-      <input value={password} id="password" type="password" placeholder="password" onChange={e => {
-        setPassword(e.target.value);
-      }}></input><br /><br />
-      <input value={passwordAgain} id="confirm password" type="password" placeholder="confirm password" onChange={e => {
-        setPasswordAgain(e.target.value);
-      }}></input><br /><br />
-      {/* Login web form  */}
-      <button onClick={register}>Create account</button>
-      <p>Already have an account?{" "}
-        <Link to="/login">Log in!</Link></p>
+      <Grid container justifyContent="center" alignItems="center" style={{ marginTop: "50px" }}  >
+        <FormControl>
+          <Typography variant="h5">Sign up</Typography>
+          <br /><br />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="first name"
+            label="First name"
+            fullWidth
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="last name"
+            label="Last name"
+            fullWidth
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="email"
+            label="Email"
+            type="email"
+            fullWidth
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="password"
+            label="Password"
+            type="password"
+            fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="confirm password"
+            label="Confirm password"
+            type="password"
+            fullWidth
+            value={passwordAgain}
+            onChange={(e) => setPasswordAgain(e.target.value)}
+          />
+          <br />
+          <Button variant="outlined" onClick={register}>Create account</Button>
+          <br /><br />
+          <Typography>Already have an account?{" "}
+            <Link to="/login">Log in!</Link></Typography>
+        </FormControl>
+      </Grid>
     </>
   );
 };
