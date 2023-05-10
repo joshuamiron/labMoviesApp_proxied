@@ -2,14 +2,29 @@ import React, { useContext } from "react";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 import { MoviesContext } from "../../contexts/moviesContext";
+import { AuthContext } from "../../contexts/authContext";
+import { addFavourite } from '../../api/api'; // Import the addFavourite API call
 
 const AddToFavouritesIcon = ({ movie }) => {
-  const context = useContext(MoviesContext);
+  const context = useContext(MoviesContext, AuthContext);
 
-  const onUserSelect = (e) => {
+  /* const onUserSelect = (e) => {
     e.preventDefault();
     context.addToFavourites(movie);
+  };*/
+
+  const onUserSelect = async (e) => {
+    e.preventDefault();
+    const movieId = movie.id; // Assuming you have the movieId available in your movie object
+    console.log(movie.id);
+    try {
+      const response = await addFavourite(context.token, movieId); // Call the addFavourite API function
+      console.log(response); // Log the response or perform any other actions
+    } catch (error) {
+      console.error('Error adding favourite:', error);
+    }
   };
 
   //---- Check if the movie is already in the favourites list
