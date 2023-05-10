@@ -55,14 +55,17 @@ const App = ({ children }) => {
               <Route path="/movies/myplaylist" element={<PrivateRoute><MyPlaylistPage /></PrivateRoute>} />
               <Route path="/movies/favourites" element={<PrivateRoute><MoviesFavouritePage /></PrivateRoute>} />
               <Route path="/movies/mymadeupmovies" element={<PrivateRoute><MyMadeupMoviesPage /></PrivateRoute>} />
-              <Route path="/reviews/form" element={<AddMovieReviewPage />} />
-              <Route path="/reviews/:id" element={<MovieReviewPage />} />
+              <Route path="/movies/reviews/form" element={<AddMovieReviewPage />} />
+              <Route path="/movies/reviews/:id" element={<MovieReviewPage />} />
+              
               <Route path="/people/trending" element={<PeopleTrendingPage />} />
               <Route path="/people/popular" element={<PeoplePopularPage />} />
               <Route path="/people/:id" element={<PersonPage />} />
               <Route path="/people/favourites" element={<PeopleFavouritePage />} />
+              
               <Route path="/tv/shows" element={<TVListPage />} />
               <Route path="/tv/:id" element={<TVShowPage />} />
+              
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignUpPage />} />
             </Routes>

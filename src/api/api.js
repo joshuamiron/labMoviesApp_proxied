@@ -24,8 +24,7 @@ export const getMovie = (args) => {
 
 export const getGenres = () => {
   return fetch(
-    `https://api.themoviedb.org/3/genre/movie/list?api_key=${
-      import.meta.env.VITE_TMDB_KEY
+    `https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_TMDB_KEY
     }&language=en-US`
   )
     .then((response) => {
@@ -75,8 +74,7 @@ export const getMovieImages = (args) => {
 
 export const getMovieReviews = (id) => {
   return fetch(
-    `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${
-      import.meta.env.VITE_TMDB_KEY
+    `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${import.meta.env.VITE_TMDB_KEY
     }`
   )
     .then((res) => res.json())
@@ -109,8 +107,7 @@ export const getUpcomingMovies = async () => {
 
 export const getMovieCast = (id) => {
   return fetch(
-    `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${
-      import.meta.env.VITE_TMDB_KEY
+    `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${import.meta.env.VITE_TMDB_KEY
     }`
   )
     .then((res) => res.json())
@@ -165,8 +162,7 @@ export const getPopularMovies = async () => {
 
 export const getTrendingMovies = (page = 1) => {
   return fetch(
-    `https://api.themoviedb.org/3/trending/movie/week?api_key=${
-      import.meta.env.VITE_TMDB_KEY
+    `https://api.themoviedb.org/3/trending/movie/week?api_key=${import.meta.env.VITE_TMDB_KEY
     }&language=en-US&page=${page}`
   )
     .then((response) => {
@@ -191,8 +187,7 @@ export const getTrendingMovies = (page = 1) => {
 
 export const getTrendingPeople = (page = 1) => {
   return fetch(
-    `https://api.themoviedb.org/3/trending/person/week?api_key=${
-      import.meta.env.VITE_TMDB_KEY
+    `https://api.themoviedb.org/3/trending/person/week?api_key=${import.meta.env.VITE_TMDB_KEY
     }&language=en-US&include_adult=false&page=${page}`
   )
     .then((response) => {
@@ -213,8 +208,7 @@ export const getTrendingPeople = (page = 1) => {
 
 export const getPopularPeople = (page = 1) => {
   return fetch(
-    `https://api.themoviedb.org/3/person/popular?api_key=${
-      import.meta.env.VITE_TMDB_KEY
+    `https://api.themoviedb.org/3/person/popular?api_key=${import.meta.env.VITE_TMDB_KEY
     }&language=en-US&include_adult=false&page=${page}`
   )
     .then((response) => {
@@ -237,8 +231,7 @@ export const getPerson = (args) => {
   const [, idPart] = args.queryKey;
   const { id } = idPart;
   return fetch(
-    `https://api.themoviedb.org/3/person/${id}?api_key=${
-      import.meta.env.VITE_TMDB_KEY
+    `https://api.themoviedb.org/3/person/${id}?api_key=${import.meta.env.VITE_TMDB_KEY
     }`
   )
     .then((response) => {
@@ -261,8 +254,7 @@ export const getPersonImages = ({ queryKey }) => {
   const [, idPart] = queryKey;
   const { id } = idPart;
   return fetch(
-    `https://api.themoviedb.org/3/person/${id}/images?api_key=${
-      import.meta.env.VITE_TMDB_KEY
+    `https://api.themoviedb.org/3/person/${id}/images?api_key=${import.meta.env.VITE_TMDB_KEY
     }`
   )
     .then((response) => {
@@ -278,8 +270,7 @@ export const getPersonImages = ({ queryKey }) => {
 
 export const getPersonCredits = (id) => {
   return fetch(
-    `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${
-      import.meta.env.VITE_TMDB_KEY
+    `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${import.meta.env.VITE_TMDB_KEY
     }`
   )
     .then((res) => res.json())
@@ -294,11 +285,9 @@ export const getPersonCredits = (id) => {
 //------------ TV ------------//
 //----------------------------//
 
-export const getTVShows = (page = 1) => {
+/*export const getTVShows = (page = 1) => {
   return fetch(
-    `https://api.themoviedb.org/3/discover/tv?api_key=${
-      import.meta.env.VITE_TMDB_KEY
-    }&language=en-US&include_adult=false&include_video=false&page=${page}`
+    `https://api.themoviedb.org/3/discover/tv?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}`
   )
     .then((response) => {
       if (!response.ok) {
@@ -314,16 +303,22 @@ export const getTVShows = (page = 1) => {
     .catch((error) => {
       throw error;
     });
+};*/
+
+export const getTVShows = () => {
+  return fetch(`/api/tv`, {
+    // --- Get from my API
+    headers: {
+      Authorization: window.localStorage.getItem("token"),
+    },
+  }).then((res) => res.json());
 };
 
-export const getTVShow = (args) => {
+/* export const getTVShow = (args) => {
   const [, idPart] = args.queryKey;
   const { id } = idPart;
-
   return fetch(
-    `https://api.themoviedb.org/3/tv/${id}?api_key=${
-      import.meta.env.VITE_TMDB_KEY
-    }`
+    `https://api.themoviedb.org/3/tv/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}`
   )
     .then((response) => {
       if (!response.ok) {
@@ -339,15 +334,24 @@ export const getTVShow = (args) => {
     .catch((error) => {
       throw error;
     });
+}; */
+
+export const getTVShow = (args) => {
+  const [, idPart] = args.queryKey;
+  const { id } = idPart;
+  return fetch(`/api/tv/${id}`, {
+    // --- Get from my API
+    headers: {
+      Authorization: window.localStorage.getItem("token"),
+    },
+  }).then((res) => res.json());
 };
 
-export const getTVShowImages = ({ queryKey }) => {
+/* export const getTVShowImages = ({ queryKey }) => {
   const [, idPart] = queryKey;
   const { id } = idPart;
   return fetch(
-    `https://api.themoviedb.org/3/tv/${id}/images?api_key=${
-      import.meta.env.VITE_TMDB_KEY
-    }`
+    `https://api.themoviedb.org/3/tv/${id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`
   )
     .then((response) => {
       if (!response.ok) {
@@ -358,6 +362,17 @@ export const getTVShowImages = ({ queryKey }) => {
     .catch((error) => {
       throw error;
     });
+}; */
+
+export const getTVShowImages = (args) => {
+  const [, idPart] = args.queryKey;
+  const { id } = idPart;
+  return fetch(`/api/tv/${id}/images`, {
+    // --- Get from my API
+    headers: {
+      Authorization: window.localStorage.getItem("token"),
+    },
+  }).then((res) => res.json());
 };
 
 //----------------------------//
@@ -392,11 +407,11 @@ export const login = async (email, password) => {
 };
 
 export const addFavourite = async (movieId) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   const res = await fetch("/api/accounts/:id/favourites", {
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     method: "post",
     body: JSON.stringify({

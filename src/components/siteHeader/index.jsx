@@ -68,7 +68,9 @@ const SiteHeader = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
-  //----- All menu items displayed as a flat list for mobile
+  //--------------------------------------------------------------//
+  //----- All menu items displayed as a flat list for mobile -----//
+  //--------------------------------------------------------------//
   const mobileMenuOptions = [
     { label: "Home", path: "/" },
     { label: "Upcoming", path: "/movies/upcoming" },
@@ -81,9 +83,20 @@ const SiteHeader = () => {
     { label: "Trending People", path: "/people/trending" },
     { label: "Favourite People", path: "/people/favourites" },
     { label: "TV Shows", path: "/tv/shows" },
+    ...(context.isAuthenticated ?
+    [
+      { label: "Log Out", path: "/logout" },
+      //{ label: "Update Account", path: "/edit" },
+    ]
+    : [
+      { label: "Log In", path: "/login" },
+      { label: "Create New Account", path: "/signup" },
+    ]),
   ];
 
-  //----- Menu items nexted by category into drop down menus
+  //--------------------------------------------------------------------------//
+  //----- Menu items for desktop nested by category into drop down menus -----//
+  //--------------------------------------------------------------------------//
   const movieMenuOptions = [
     { label: "Home", path: "/" },
     { label: "Upcoming", path: "/movies/upcoming" },
@@ -115,7 +128,6 @@ const SiteHeader = () => {
   ];*/
 
 const myAccountMenuOptions = context.isAuthenticated ?
-
     [
       { label: "Log Out", path: "/logout" },
       //{ label: "Update Account", path: "/edit" },
