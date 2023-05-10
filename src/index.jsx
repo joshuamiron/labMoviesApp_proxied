@@ -6,6 +6,7 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 
 import SiteHeader from './components/siteHeader'
 import AuthContextProvider from "./contexts/authContext";
+
 import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
 import MovieReviewPage from "./pages/movieReviewPage";
@@ -17,12 +18,15 @@ import AddMovieReviewPage from './pages/addMovieReviewPage'
 import MyPlaylistPage from './pages/myPlaylistPage';
 import MyMadeupMoviesPage from './pages/myMadeupMoviesPage';
 import MoviesContextProvider from "./contexts/moviesContext";
+
 import PersonPage from "./pages/personDetailsPage";
 import PeopleTrendingPage from './pages/peopleTrendingPage';
+import PeoplePopularPage from './pages/peoplePopularPage';
 import PeopleFavouritePage from "./pages/peopleFavouritePage";
+
 import TVListPage from "./pages/tvShowListPage";
 import TVShowPage from "./pages/tvShowDetailsPage";
-import PeoplePopularPage from './pages/peoplePopularPage';
+
 import LoginPage from './pages/accountLoginPage';
 import SignUpPage from './pages/accountSignUpPage';
 import PrivateRoute from "./privateRoute";
@@ -52,17 +56,18 @@ const App = ({ children }) => {
               <Route path="/movies/upcoming" element={<MoviesUpcomingPage />} />
               <Route path="/movies/popular" element={<MoviesPopularPage />} />
               <Route path="/movies/trending" element={<MoviesTrendingPage />} />
+              <Route path="/reviews/form" element={<AddMovieReviewPage />} />
+              <Route path="/reviews/:id" element={<MovieReviewPage />} />
+              
               <Route path="/movies/myplaylist" element={<PrivateRoute><MyPlaylistPage /></PrivateRoute>} />
               <Route path="/movies/favourites" element={<PrivateRoute><MoviesFavouritePage /></PrivateRoute>} />
               <Route path="/movies/mymadeupmovies" element={<PrivateRoute><MyMadeupMoviesPage /></PrivateRoute>} />
-              <Route path="/movies/reviews/form" element={<AddMovieReviewPage />} />
-              <Route path="/movies/reviews/:id" element={<MovieReviewPage />} />
+              <Route path="/people/favourites" element={<PeopleFavouritePage />} />
               
               <Route path="/people/trending" element={<PeopleTrendingPage />} />
               <Route path="/people/popular" element={<PeoplePopularPage />} />
               <Route path="/people/:id" element={<PersonPage />} />
-              <Route path="/people/favourites" element={<PeopleFavouritePage />} />
-              
+
               <Route path="/tv/shows" element={<TVListPage />} />
               <Route path="/tv/:id" element={<TVShowPage />} />
               

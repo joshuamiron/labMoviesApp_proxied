@@ -7,7 +7,7 @@ import { useQueries } from "react-query";
 
 import PageTemplate from '../components/templateTVShowListPage'
 import { MoviesContext } from "../contexts/moviesContext";
-import { getTVShows } from "../api/tmdb-api";
+import { getTVShows } from "../api/api";
 import Spinner from "../components/spinner";
 import useFiltering from "../hooks/useFiltering";
 import TVShowFilterUI, { tvShowNameFilter } from "../components/tvShowFilterUI";
