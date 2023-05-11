@@ -8,7 +8,7 @@ import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-import img from '../../images/film-poster-placeholder.png'
+import img from "../../images/film-poster-placeholder.png";
 import { formatDate } from "../../util";
 
 const styles = {
@@ -52,7 +52,7 @@ export default function MovieCard({ movie, action }) {
       <CardActions disableSpacing>
         {action(movie)}
         <Link to={`/movies/${movie.id}`}>
-          <Button variant="text" size="medium" color="primary" >
+          <Button variant="text" size="medium" color="primary">
             More Info
           </Button>
         </Link>

@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 
 import PageTemplate from "../components/templateMovieListPage";
 import Spinner from "../components/spinner";
-//import MovieFilterUI, { titleFilter } from "../components/movieFilterUI";
 import MovieFilterUI, { titleFilter, genreFilter, releaseYearFilter } from "../components/movieFilterUI";
 import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
 import PlaylistAddIcon from "../components/cardIcons/addToPlaylist";

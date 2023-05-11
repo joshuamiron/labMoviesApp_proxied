@@ -56,13 +56,14 @@ const App = ({ children }) => {
               <Route path="/movies/upcoming" element={<MoviesUpcomingPage />} />
               <Route path="/movies/popular" element={<MoviesPopularPage />} />
               <Route path="/movies/trending" element={<MoviesTrendingPage />} />
+              
               <Route path="/reviews/form" element={<AddMovieReviewPage />} />
               <Route path="/reviews/:id" element={<MovieReviewPage />} />
               
               <Route path="/movies/myplaylist" element={<PrivateRoute><MyPlaylistPage /></PrivateRoute>} />
               <Route path="/movies/favourites" element={<PrivateRoute><MoviesFavouritePage /></PrivateRoute>} />
               <Route path="/movies/mymadeupmovies" element={<PrivateRoute><MyMadeupMoviesPage /></PrivateRoute>} />
-              <Route path="/people/favourites" element={<PeopleFavouritePage />} />
+              <Route path="/people/favourites" element={<PrivateRoute><PeopleFavouritePage /></PrivateRoute>} />
               
               <Route path="/people/trending" element={<PeopleTrendingPage />} />
               <Route path="/people/popular" element={<PeoplePopularPage />} />

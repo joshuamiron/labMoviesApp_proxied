@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 import Grid from '@mui/material/Grid';
 import MovieCardSmall from "../movieCardSmall";
 import { getSimilarMovies } from "../../api/api";
+//import { getRecommendedMovies } from "../../api/api";
 import PlaylistAddIcon from '../cardIcons/addToPlaylist'
 import Paper from "@mui/material/Paper";
 
@@ -12,6 +13,8 @@ const SimilarMovies = ({ movie }) => {
   useEffect(() => {
     getSimilarMovies(movie.id).then((movies) => {
       setSimilarMovies(movies);
+    })
+    .catch((error) => {
     });
   }, [movie.id]);
 

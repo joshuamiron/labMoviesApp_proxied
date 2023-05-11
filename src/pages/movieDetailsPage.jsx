@@ -6,14 +6,12 @@ import SimilarMovies from "../components/similarMovies";
 import MovieCredits from "../components/movieCredits";
 import AllMoviePosters from "../components/movieAllPosters"
 import PageTemplate from "../components/templateMoviePage";
-//import useMovie from "../hooks/useMovie";
 import { getMovie } from '../api/api'
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner';
 
 const MovieDetailsPage = () => {
   const { id } = useParams();
-  //  const [movie] = useMovie(id);
 
   const { data: movie, error, isLoading, isError } = useQuery(
     ["movie", { id: id }],

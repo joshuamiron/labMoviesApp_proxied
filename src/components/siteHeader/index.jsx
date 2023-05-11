@@ -120,14 +120,7 @@ const SiteHeader = () => {
     { label: "Popular People", path: "/people/popular" },
   ];
 
-    /*const myAccountMenuOptions = [
-    { label: "Log In", path: "/login" },
-    { label: "Log Out", path: "/logout" },
-    { label: "Update Account", path: "/edit" },
-    { label: "Create New Account", path: "/signup" },
-  ];*/
-
-const myAccountMenuOptions = context.isAuthenticated ?
+  const myAccountMenuOptions = context.isAuthenticated ?
     [
       { label: "Log Out", path: "/logout" },
       //{ label: "Update Account", path: "/edit" },

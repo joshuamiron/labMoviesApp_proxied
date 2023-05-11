@@ -11,16 +11,12 @@ const MovieCast = ({ movie }) => {
 
   useEffect(() => {
     getMovieCast(movie.id).then((cast) => {
-      console.log("Response from getMovieCast:", credits);
       setMovieCast(cast);
     })
     .catch((error) => {
-      console.error("Error in getMovieCast:", error);
     });
   }, [movie.id]);
 
-  console.log("movieCast:", movieCast);
-  
   return (
     <>
       <Paper>
