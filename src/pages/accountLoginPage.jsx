@@ -14,15 +14,10 @@ const LoginPage = (props) => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  /*const login = () => {
-        context.authenticate(email, password);
-    };*/
-
   const login = async () => {
     setErrorMessage(""); // Reset the error message
     try {
-      // Make the login request to the server
-      const response = await context.authenticate(email, password);
+      const response = await context.authenticate(email, password); // Make the login request to the server
 
       // If the response status is 401 (unauthorized), display the error message
       // This isn't working for some reason - its going right to the catch block.

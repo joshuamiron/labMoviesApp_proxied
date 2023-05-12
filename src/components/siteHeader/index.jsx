@@ -13,10 +13,14 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Grid from "@mui/material/Grid";
 
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
+import { grey, blue } from "@mui/material/colors";
+
 import { AuthContext } from "../../contexts/authContext";
 import LoginModal from "../accountLoginModal";
 import SignUpModal from "../accountSignUpModal";
-
 
 const styles = {
   title: {
@@ -36,20 +40,25 @@ const SiteHeader = () => {
   const location = useLocation();
   const { isAuthenticated } = context;
   console.log("isAuthenticated = " + isAuthenticated);
+  console.log("User's name is " + context.firstName + " " + context.lastName);
 
   //--- stuff for login modal
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const handleLoginModalOpen = () => {
     setLoginModalOpen(true);
   };
-  const handleLoginModalClose = () => { setLoginModalOpen(false); };
+  const handleLoginModalClose = () => {
+    setLoginModalOpen(false);
+  };
 
   //--- stuff for sign up modal
   const [isSignUpModalOpen, setSignUpModalOpen] = useState(false);
   const handleSignUpModalOpen = () => {
     setSignUpModalOpen(true);
   };
-  const handleSignUpModalClose = () => { setSignUpModalOpen(false); };
+  const handleSignUpModalClose = () => {
+    setSignUpModalOpen(false);
+  };
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [movieAnchorEl, setMovieAnchorEl] = useState(null);
@@ -83,15 +92,15 @@ const SiteHeader = () => {
     { label: "Trending People", path: "/people/trending" },
     { label: "Favourite People", path: "/people/favourites" },
     { label: "TV Shows", path: "/tv/shows" },
-    ...(context.isAuthenticated ?
-    [
-      { label: "Log Out", path: "/logout" },
-      //{ label: "Update Account", path: "/edit" },
-    ]
-    : [
-      { label: "Log In", path: "/login" },
-      { label: "Create New Account", path: "/signup" },
-    ]),
+    ...(context.isAuthenticated
+      ? [
+          { label: "Log Out", path: "/logout" },
+          //{ label: "Update Account", path: "/edit" },
+        ]
+      : [
+          { label: "Log In", path: "/login" },
+          { label: "Create New Account", path: "/signup" },
+        ]),
   ];
 
   //--------------------------------------------------------------------------//
@@ -111,37 +120,34 @@ const SiteHeader = () => {
     { label: "Favourite People", path: "/people/favourites" },
   ];
 
-  const tvMenuOptions = [
-    { label: "TV Shows", path: "/tv/shows" },
-  ];
+  const tvMenuOptions = [{ label: "TV Shows", path: "/tv/shows" }];
 
   const peopleMenuOptions = [
     { label: "Trending People", path: "/people/trending" },
     { label: "Popular People", path: "/people/popular" },
   ];
 
-  const myAccountMenuOptions = context.isAuthenticated ?
-    [
-      { label: "Log Out", path: "/logout" },
-      //{ label: "Update Account", path: "/edit" },
-    ]
+  const myAccountMenuOptions = context.isAuthenticated
+    ? [
+        { label: "Log Out", path: "/logout" },
+        //{ label: "Edit Account", path: "/edit" },
+      ]
     : [
-      { label: "Log In", path: "/login" },
-      { label: "Create New Account", path: "/signup" },
-    ];
+        { label: "Log In", path: "/login" },
+        { label: "Create New Account", path: "/signup" },
+      ];
 
   const handleMenuSelect = (pageURL) => {
     //if (pageURL === "/login") {
     //  handleLoginModalOpen();
     //}
-   // else if (pageURL === "/signup") {
-   //   handleSignUpModalOpen();
-   // }
-   if (pageURL === "/logout") {
-    context.signout();
-    navigate("/login");
-   }
-    else {
+    // else if (pageURL === "/signup") {
+    //   handleSignUpModalOpen();
+    // }
+    if (pageURL === "/logout") {
+      context.signout();
+      //navigate("/login");
+    } else {
       navigate(pageURL);
     }
   };
@@ -240,8 +246,7 @@ const SiteHeader = () => {
           ) : (
             <>
               <Grid>
-                <Button
-                  onClick={handleMovieClick} color="inherit">
+                <Button onClick={handleMovieClick} color="inherit">
                   Movies
                 </Button>
                 <Menu
@@ -258,8 +263,7 @@ const SiteHeader = () => {
                     </MenuItem>
                   ))}
                 </Menu>
-                <Button
-                  onClick={handleMyStuffClick} color="inherit">
+                <Button onClick={handleMyStuffClick} color="inherit">
                   My Stuff
                 </Button>
                 <Menu
@@ -270,13 +274,13 @@ const SiteHeader = () => {
                   {myStuffMenuOptions.map((opt) => (
                     <MenuItem
                       key={opt.label}
-                      onClick={() => handleMenuSelect(opt.path)}>
+                      onClick={() => handleMenuSelect(opt.path)}
+                    >
                       {opt.label}
                     </MenuItem>
                   ))}
                 </Menu>
-                <Button
-                  onClick={handleTVClick} color="inherit">
+                <Button onClick={handleTVClick} color="inherit">
                   TV Shows
                 </Button>
                 <Menu
@@ -287,13 +291,13 @@ const SiteHeader = () => {
                   {tvMenuOptions.map((opt) => (
                     <MenuItem
                       key={opt.label}
-                      onClick={() => handleMenuSelect(opt.path)}>
+                      onClick={() => handleMenuSelect(opt.path)}
+                    >
                       {opt.label}
                     </MenuItem>
                   ))}
                 </Menu>
-                <Button
-                  onClick={handlePeopleClick} color="inherit">
+                <Button onClick={handlePeopleClick} color="inherit">
                   People
                 </Button>
                 <Menu
@@ -304,15 +308,33 @@ const SiteHeader = () => {
                   {peopleMenuOptions.map((opt) => (
                     <MenuItem
                       key={opt.label}
-                      onClick={() => handleMenuSelect(opt.path)}>
+                      onClick={() => handleMenuSelect(opt.path)}
+                    >
                       {opt.label}
                     </MenuItem>
                   ))}
                 </Menu>
-                <Button
-                  onClick={handleMyAccountClick} color="inherit">
-                  My Account
-                </Button>
+                {isAuthenticated ? (
+                  <>
+                    <Button onClick={handleMyAccountClick} color="inherit">
+                      <Stack direction="row" spacing={2}>
+                        <Avatar
+                          sx={{
+                            color: blue[500],
+                            bgcolor: grey[50],
+                            marginRight: "10px",
+                            width: 40, height: 40
+                          }}
+                        >{context.firstName.charAt(0)}{context.lastName.charAt(0)}
+                        </Avatar>
+                      </Stack>
+                    </Button>
+                  </>
+                ) : (
+                  <Button onClick={handleMyAccountClick} color="inherit">
+                    Sign In
+                  </Button>
+                )}
                 <Menu
                   anchorEl={myAccountAnchorEl}
                   open={myAccountOpen}
@@ -321,13 +343,13 @@ const SiteHeader = () => {
                   {myAccountMenuOptions.map((opt) => (
                     <MenuItem
                       key={opt.label}
-                      onClick={() => handleMenuSelect(opt.path)}>
+                      onClick={() => handleMenuSelect(opt.path)}
+                    >
                       {opt.label}
                     </MenuItem>
                   ))}
                 </Menu>
               </Grid>
-
             </>
           )}
           {/*<LoginModal open={isLoginModalOpen} handleClose={handleLoginModalClose} />

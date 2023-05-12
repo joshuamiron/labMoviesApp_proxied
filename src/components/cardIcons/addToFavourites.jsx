@@ -17,11 +17,11 @@ const AddToFavouritesIcon = ({ movie }) => {
 
   const onUserSelect = async (e) => {
     e.preventDefault();
-    const movieId = movie.id; // Assuming you have the movieId available in your movie object
-    console.log(movie.id);
+    const movieId = movie.id;
+    console.log("Card Icons movieId: " + movieId)
     try {
-      const response = await addFavourite(context.token, movieId); // Call the addFavourite API function
-      console.log(response); // Log the response or perform any other actions
+      const response = await addFavourite(movieId); // Call the addFavourite API function
+      //console.log(response); // Log the response or perform any other actions
     } catch (error) {
       console.error('Error adding favourite:', error);
     }

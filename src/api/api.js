@@ -101,24 +101,19 @@ export const getRecommendedMovies = async (id) => {
 
 //------------
 //------------
-
-/*export const getMovieReviews = (args) => {
-  const [, idPart] = args.queryKey;
-  const { id } = idPart;
-  return fetch(
-    `/api/movies/${id}/reviews`, { // --- Get from my API
+/*export const getMovieReviews = async (id) => {
+  const res = await fetch(`/api/movies/${id}/reviews`, {
     headers: {
-      'Authorization': window.localStorage.getItem('token')
-    }
-  }
-  ).then((res) => res.json());
+      Authorization: window.localStorage.getItem("token"),
+    },
+  });
+  const data = await res.json();
+  return data.results;
 };*/
 
 export const getMovieReviews = (id) => {
   return fetch(
-    `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${
-      import.meta.env.VITE_TMDB_KEY
-    }`
+    `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${import.meta.env.VITE_TMDB_KEY}`
   )
     .then((res) => res.json())
     .then((json) => {
@@ -126,6 +121,7 @@ export const getMovieReviews = (id) => {
       return json.results;
     });
 };
+
 
 //---------------------------------//
 //--- People (from Express API) ---//
@@ -178,8 +174,6 @@ export const getPersonCredits = async (id) => {
     },
   });
   const data = await res.json();
-  console.log(`getPersonCredits called for person ID ${id}`);
-  console.log(data.cast);
   return data.cast;
 };
 
@@ -249,12 +243,11 @@ export const login = async (email, password) => {
   return await res.json();
 };
 
-export const addFavourite = async (movieId) => {
+/*export const addFavourite = async (movieId) => {
   const token = localStorage.getItem("token");
   const res = await fetch("/api/accounts/:id/favourites", {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+    headers: {"Content-Type": "application/json", 
+    Authorization: `Bearer ${token}`,
     },
     method: "post",
     body: JSON.stringify({
@@ -262,4 +255,35 @@ export const addFavourite = async (movieId) => {
     }),
   });
   return await res.json();
+};*/
+
+export const addFavourite = async (movieId) => {
+  try {
+    const token = localStorage.getItem('token'); // Retrieve the JWT token from local storage
+    if (!token) {
+      // Handle case where token is not available
+      console.error('JWT token not found');
+      return;
+    }
+    const response = await fetch(`/api/accounts/:id/favourites`, {
+      method: 'POST',
+      headers: {
+        Authorization: window.localStorage.getItem("token"),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ movieId }),
+    });
+
+    if (response.ok) {
+      const account = await response.json();
+      // Handle success, e.g., update the UI with the updated account data
+      console.log('Favorite movie added successfully:', account);
+    } else {
+      // Handle error, e.g., display an error message
+      console.error('Failed to add favorite movie:', response.statusText);
+    }
+  } catch (error) {
+    // Handle error, e.g., display an error message
+    console.error('Failed to add favorite movie:', error.message);
+  }
 };
