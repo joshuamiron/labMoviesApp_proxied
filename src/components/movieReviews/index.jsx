@@ -7,9 +7,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
 import { getMovieReviews } from "../../api/api";
 import { excerpt } from "../../util";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 const styles = {
   table: {
@@ -49,7 +50,7 @@ export default function MovieReviews({ movie }) {
               <TableCell >{excerpt(r.content)}</TableCell>
               <TableCell >
                 <Link
-                  to={`/reviews/${r.id}`}
+                  to={`/movies/${r.id}/reviews`}
                   state={{
                     review: r,
                     movie: movie,

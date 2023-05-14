@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { FormControl, FormGroup, Typography } from "@mui/material";
+import { FormControl, Typography } from "@mui/material";
 import { Grid } from "@mui/material";
 
 import { AuthContext } from "../contexts/authContext";
@@ -20,35 +20,18 @@ const SignUpPage = (props) => {
 
   const register = () => {
     if (password.length > 0 && password === passwordAgain) {
-      console.log("reg");
+      console.log(firstName + " " + lastName + " registered successfully");
       context.register(email, password, firstName, lastName);
       setRegistered(true);
     }
   };
-
- /* const register = async () => {
-    setErrorMessage(""); // Reset the error message
-    if (password.length > 0 && password === passwordAgain) {
-      try {
-        await context.register(email, password, firstName, lastName);
-        setRegistered(true);
-      } catch (error) {
-        //setErrorMessage(error.response.data.message); // Set the error message from the response
-        if (error.response && error.response.status === 409) {
-          setErrorMessage('Account already exists');
-        } else {
-          setErrorMessage('Registration failed');
-        }
-      }
-    }
-  };*/
-
+  
 
   // const { from } = props.location.state || { from: { pathname: "/" } };
 
   if (registered === true) {
-    if (context.isAuthenticated === true) {
-    }
+    //if (context.isAuthenticated === true) {
+    //}
     return <Navigate to="/login" />;
   }
 
@@ -113,6 +96,8 @@ const SignUpPage = (props) => {
             onChange={(e) => setPasswordAgain(e.target.value)}
             style={{ width: "300px" }} // Set a fixed width for the text field
           />
+          <br />
+          {errorMessage && <Typography color="error">{errorMessage}</Typography>}
           <br />
           <Button variant="outlined" onClick={register}>
             Create account

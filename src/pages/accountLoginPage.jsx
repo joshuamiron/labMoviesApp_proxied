@@ -20,12 +20,12 @@ const LoginPage = (props) => {
       const response = await context.authenticate(email, password); // Make the login request to the server
 
       // If the response status is 401 (unauthorized), display the error message
-      // This isn't working for some reason - its going right to the catch block.
+      // This isn't working correctly for some reason - its going right to the catch block.
       if (response.status === 401) {
         setErrorMessage("Invalid email or password. Please try again.");
       } else {
         // Login successful, redirect to the home page
-        return <Navigate to={"./home"} />;
+        //return <Navigate to={"./home"} />;
       }
     } catch (error) {
       console.log(error);
@@ -41,7 +41,7 @@ const LoginPage = (props) => {
   // Either / or the protected path user tried to access.
   // const { from } = props.location.state || { from: { pathname: "/" } };
 
-  if (context.isAuthenticated === true) {
+   if (context.isAuthenticated === true) {
     return <Navigate to={"./home"} />;
   }
 

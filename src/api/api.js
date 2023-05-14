@@ -99,9 +99,7 @@ export const getRecommendedMovies = async (id) => {
   return data.results;
 };
 
-//------------
-//------------
-/*export const getMovieReviews = async (id) => {
+export const getMovieReviews = async (id) => {
   const res = await fetch(`/api/movies/${id}/reviews`, {
     headers: {
       Authorization: window.localStorage.getItem("token"),
@@ -109,19 +107,7 @@ export const getRecommendedMovies = async (id) => {
   });
   const data = await res.json();
   return data.results;
-};*/
-
-export const getMovieReviews = (id) => {
-  return fetch(
-    `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${import.meta.env.VITE_TMDB_KEY}`
-  )
-    .then((res) => res.json())
-    .then((json) => {
-      console.log(json.results);
-      return json.results;
-    });
 };
-
 
 //---------------------------------//
 //--- People (from Express API) ---//
@@ -216,8 +202,8 @@ export const getTVShowImages = async (args) => {
 //--- Accounts (from Express API) ---//
 //-----------------------------------//
 
-export const signup = async (email, password, firstName, lastName) => {
-  const res = await fetch("/api/accounts", {
+export const createAccount = async (email, password, firstName, lastName) => {
+  const res = await fetch(`/api/accounts`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -232,8 +218,8 @@ export const signup = async (email, password, firstName, lastName) => {
   return await res.json();
 };
 
-export const login = async (email, password) => {
-  const res = await fetch("/api/accounts/security/token", {
+export const authenticateAccount = async (email, password) => {
+  const res = await fetch(`/api/accounts/security/token`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -242,6 +228,23 @@ export const login = async (email, password) => {
   });
   return await res.json();
 };
+
+//----------------
+//----------------
+
+export const getAccount = async (email) => {
+  console.log("getAccount called");
+    const response = await fetch(`/api/accounts/getaccount/${email}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "get",
+    });
+    const data = await response.json();
+    console.log(data);
+    return data;
+  };
+
 
 /*export const addFavourite = async (movieId) => {
   const token = localStorage.getItem("token");

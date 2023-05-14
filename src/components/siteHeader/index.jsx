@@ -40,6 +40,7 @@ const SiteHeader = () => {
   const location = useLocation();
   const { isAuthenticated } = context;
   console.log("isAuthenticated = " + isAuthenticated);
+  console.log("User's email is " + context.email);
   console.log("User's name is " + context.firstName + " " + context.lastName);
 
   //--- stuff for login modal
@@ -146,7 +147,7 @@ const SiteHeader = () => {
     // }
     if (pageURL === "/logout") {
       context.signout();
-      //navigate("/login");
+      navigate("/login");
     } else {
       navigate(pageURL);
     }
@@ -315,7 +316,7 @@ const SiteHeader = () => {
                   ))}
                 </Menu>
                 {isAuthenticated ? (
-                  <>
+
                     <Button onClick={handleMyAccountClick} color="inherit">
                       <Stack direction="row" spacing={2}>
                         <Avatar
@@ -329,11 +330,14 @@ const SiteHeader = () => {
                         </Avatar>
                       </Stack>
                     </Button>
-                  </>
+
+                  
                 ) : (
+
                   <Button onClick={handleMyAccountClick} color="inherit">
                     Sign In
                   </Button>
+
                 )}
                 <Menu
                   anchorEl={myAccountAnchorEl}
