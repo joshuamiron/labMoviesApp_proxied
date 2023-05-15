@@ -207,7 +207,7 @@ export const createAccount = async (email, password, firstName, lastName) => {
     headers: {
       "Content-Type": "application/json",
     },
-    method: "post",
+    method: "POST",
     body: JSON.stringify({
       email: email,
       password: password,
@@ -223,14 +223,11 @@ export const authenticateAccount = async (email, password) => {
     headers: {
       "Content-Type": "application/json",
     },
-    method: "post",
+    method: "POST",
     body: JSON.stringify({ email: email, password: password }),
   });
   return await res.json();
 };
-
-//----------------
-//----------------
 
 export const getAccount = async (email) => {
   console.log("getAccount called");
@@ -238,12 +235,17 @@ export const getAccount = async (email) => {
       headers: {
         "Content-Type": "application/json",
       },
-      method: "get",
+      method: "GET",
     });
     const data = await response.json();
+    console.log("getAccount called");
     console.log(data);
     return data;
   };
+
+//----------------
+//----------------
+
 
 
 /*export const addFavourite = async (movieId) => {
@@ -252,7 +254,7 @@ export const getAccount = async (email) => {
     headers: {"Content-Type": "application/json", 
     Authorization: `Bearer ${token}`,
     },
-    method: "post",
+    method: "POST",
     body: JSON.stringify({
       movieId: movieId,
     }),
@@ -260,33 +262,18 @@ export const getAccount = async (email) => {
   return await res.json();
 };*/
 
-export const addFavourite = async (movieId) => {
+export const addFavourite = async (movieId, email) => {
   try {
-    const token = localStorage.getItem('token'); // Retrieve the JWT token from local storage
-    if (!token) {
-      // Handle case where token is not available
-      console.error('JWT token not found');
-      return;
-    }
-    const response = await fetch(`/api/accounts/:id/favourites`, {
-      method: 'POST',
+    const response = await fetch(`/api/accounts/${email}/favourites`, {
+      method: "PUT",
       headers: {
-        Authorization: window.localStorage.getItem("token"),
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ movieId }),
+      body: JSON.stringify({ movieId, email }),
     });
-
-    if (response.ok) {
-      const account = await response.json();
-      // Handle success, e.g., update the UI with the updated account data
-      console.log('Favorite movie added successfully:', account);
-    } else {
-      // Handle error, e.g., display an error message
-      console.error('Failed to add favorite movie:', response.statusText);
-    }
+    const data = await response.json();
+    return { ok: response.ok, data };
   } catch (error) {
-    // Handle error, e.g., display an error message
-    console.error('Failed to add favorite movie:', error.message);
+    throw new Error("Failed to add favorite movie: " + error.message);
   }
 };

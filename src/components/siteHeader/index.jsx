@@ -13,7 +13,6 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Grid from "@mui/material/Grid";
 
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { grey, blue } from "@mui/material/colors";
@@ -35,31 +34,35 @@ const styles = {
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader = () => {
-  const context = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuthenticated } = context;
+  const { isAuthenticated } = authContext;
   console.log("isAuthenticated = " + isAuthenticated);
-  console.log("User's email is " + context.email);
-  console.log("User's name is " + context.firstName + " " + context.lastName);
+  if (isAuthenticated === true) {
+    console.log("User's email is " + authContext.email);
+    console.log("User's name is " + authContext.firstName + " " + authContext.lastName);
+    console.log("User's account ID is " + authContext.id);
+  };
+
 
   //--- stuff for login modal
-  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+  /* const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const handleLoginModalOpen = () => {
     setLoginModalOpen(true);
   };
   const handleLoginModalClose = () => {
     setLoginModalOpen(false);
-  };
+  }; */
 
   //--- stuff for sign up modal
-  const [isSignUpModalOpen, setSignUpModalOpen] = useState(false);
+  /* const [isSignUpModalOpen, setSignUpModalOpen] = useState(false);
   const handleSignUpModalOpen = () => {
     setSignUpModalOpen(true);
   };
   const handleSignUpModalClose = () => {
     setSignUpModalOpen(false);
-  };
+  }; */
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [movieAnchorEl, setMovieAnchorEl] = useState(null);
@@ -93,7 +96,7 @@ const SiteHeader = () => {
     { label: "Trending People", path: "/people/trending" },
     { label: "Favourite People", path: "/people/favourites" },
     { label: "TV Shows", path: "/tv/shows" },
-    ...(context.isAuthenticated
+    ...(authContext.isAuthenticated
       ? [
           { label: "Log Out", path: "/logout" },
           //{ label: "Update Account", path: "/edit" },
@@ -128,7 +131,7 @@ const SiteHeader = () => {
     { label: "Popular People", path: "/people/popular" },
   ];
 
-  const myAccountMenuOptions = context.isAuthenticated
+  const myAccountMenuOptions = authContext.isAuthenticated
     ? [
         { label: "Log Out", path: "/logout" },
         //{ label: "Edit Account", path: "/edit" },
@@ -138,18 +141,24 @@ const SiteHeader = () => {
         { label: "Create New Account", path: "/signup" },
       ];
 
+      //--- stuff for handleMenuSelect for modals
+      /* const handleMenuSelect = (pageURL) => {
+        if (pageURL === "/login") {
+          handleLoginModalOpen();
+        }
+         else if (pageURL === "/signup") {
+           handleSignUpModalOpen();
+         }
+      }; */
+
   const handleMenuSelect = (pageURL) => {
-    //if (pageURL === "/login") {
-    //  handleLoginModalOpen();
-    //}
-    // else if (pageURL === "/signup") {
-    //   handleSignUpModalOpen();
-    // }
     if (pageURL === "/logout") {
-      context.signout();
+      authContext.signout();
       navigate("/login");
+      console.log(pageURL);
     } else {
       navigate(pageURL);
+      console.log(pageURL);
     }
   };
 
@@ -326,7 +335,7 @@ const SiteHeader = () => {
                             marginRight: "10px",
                             width: 40, height: 40
                           }}
-                        >{context.firstName.charAt(0)}{context.lastName.charAt(0)}
+                        >{authContext.firstName.charAt(0)}{authContext.lastName.charAt(0)}
                         </Avatar>
                       </Stack>
                     </Button>

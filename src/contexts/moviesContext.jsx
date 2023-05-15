@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 
-export const MoviesContext = React.createContext(null);
+export const MoviesContext = createContext(null);
 
-const MoviesContextProvider = (props) => {
+export const MoviesContextProvider = (props) => {
   const [myReviews, setMyReviews] = useState({});
   const [favourites, setFavourites] = useState([]);
   const [playlist, setPlaylist] = useState([]);
@@ -63,6 +63,9 @@ const MoviesContextProvider = (props) => {
     setMyMadeupMovies(updatedMadeupMovies);
   };
 
+  const resetMoviesContext = () => {
+    setFavourites([]);
+  };
 
   return (
     <MoviesContext.Provider
@@ -77,6 +80,7 @@ const MoviesContextProvider = (props) => {
         deleteMadeupMovie,
         favouritePeople,
         addToFavouritePeople,
+        resetMoviesContext,
       }}
     >
       {props.children}

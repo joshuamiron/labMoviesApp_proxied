@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -9,7 +9,7 @@ import { Grid } from "@mui/material";
 import { AuthContext } from "../contexts/authContext";
 
 const LoginPage = (props) => {
-  const context = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -17,7 +17,7 @@ const LoginPage = (props) => {
   const login = async () => {
     setErrorMessage(""); // Reset the error message
     try {
-      const response = await context.authenticate(email, password); // Make the login request to the server
+      const response = await authContext.authenticate(email, password); // Make the login request to the server
 
       // If the response status is 401 (unauthorized), display the error message
       // This isn't working correctly for some reason - its going right to the catch block.
@@ -25,7 +25,7 @@ const LoginPage = (props) => {
         setErrorMessage("Invalid email or password. Please try again.");
       } else {
         // Login successful, redirect to the home page
-        //return <Navigate to={"./home"} />;
+        return <Navigate to={"/"} />;
       }
     } catch (error) {
       console.log(error);
@@ -41,8 +41,8 @@ const LoginPage = (props) => {
   // Either / or the protected path user tried to access.
   // const { from } = props.location.state || { from: { pathname: "/" } };
 
-   if (context.isAuthenticated === true) {
-    return <Navigate to={"./home"} />;
+   if (authContext.isAuthenticated === true) {
+    return <Navigate to={"/"} />;
   }
 
   return (

@@ -8,7 +8,9 @@ import { AuthContext } from "../../contexts/authContext";
 import { addFavourite } from '../../api/api'; // Import the addFavourite API call
 
 const AddToFavouritesIcon = ({ movie }) => {
-  const context = useContext(MoviesContext, AuthContext);
+  const {isAuthenticated, email } = useContext(AuthContext);
+  const context = useContext(MoviesContext);
+  console.log("Card Icons: email is " + email);
 
   /* const onUserSelect = (e) => {
     e.preventDefault();
@@ -17,13 +19,30 @@ const AddToFavouritesIcon = ({ movie }) => {
 
   const onUserSelect = async (e) => {
     e.preventDefault();
+    if (!isAuthenticated) {
+      console.log("User not logged in. Handle error or show login prompt.");
+      return;
+    }
     const movieId = movie.id;
-    console.log("Card Icons movieId: " + movieId)
+    console.log("Card Icons movieId: " + movieId + " and email: " + email);
     try {
-      const response = await addFavourite(movieId); // Call the addFavourite API function
-      //console.log(response); // Log the response or perform any other actions
+      const response = await addFavourite(movieId, email);
+      if (response.ok) {
+        console.log("Favorite movies updated successfully:", response.data);
+        if (isMovieFavourited) {
+          console.log("Favourite movie removed successfully:", response.data);
+          context.addToFavourites(movie);
+        } else {
+          console.log("Favourite movie added successfully:", response.data);
+          context.addToFavourites(movie);
+        }
+      } else {
+        console.error("Else: Failed to update favorite movies:", response.statusText);
+        // Handle error, e.g., display an error message
+      }
     } catch (error) {
-      console.error('Error adding favourite:', error);
+      console.error("Catch: Failed to update favorite movies:", error.message);
+      // Handle error, e.g., display an error message
     }
   };
 
