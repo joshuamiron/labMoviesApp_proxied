@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -18,7 +18,6 @@ const LoginPage = (props) => {
     setErrorMessage(""); // Reset the error message
     try {
       const response = await authContext.authenticate(email, password); // Make the login request to the server
-
       // If the response status is 401 (unauthorized), display the error message
       // This isn't working correctly for some reason - its going right to the catch block.
       if (response.status === 401) {

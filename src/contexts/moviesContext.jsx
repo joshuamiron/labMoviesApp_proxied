@@ -1,5 +1,4 @@
-import React, { useState, createContext } from "react";
-
+import React, { useState, createContext } from "react"; 
 export const MoviesContext = createContext(null);
 
 export const MoviesContextProvider = (props) => {
@@ -25,10 +24,10 @@ export const MoviesContextProvider = (props) => {
     let updatedFavouritePeople = [...favouritePeople];
     if (updatedFavouritePeople.includes(person.id)) {
       updatedFavouritePeople = updatedFavouritePeople.filter((pId) => pId !== person.id);
-      console.log(`${person.name} removed from favourites. Favourites are now ${updatedFavouritePeople}`);
+      console.log(`${person.name} removed from favourite people. Favourites are now ${updatedFavouritePeople}`);
     } else {
       updatedFavouritePeople.push(person.id);
-      console.log(`${person.name} added to favourites. Favourites are now ${updatedFavouritePeople}`);
+      console.log(`${person.name} added to favourite people. Favourites are now ${updatedFavouritePeople}`);
     }
     setFavouritePeople(updatedFavouritePeople);
   };
@@ -37,12 +36,10 @@ export const MoviesContextProvider = (props) => {
     let updatedPlaylist = [...playlist];
     if (updatedPlaylist.includes(movie.id)) {
       updatedPlaylist = updatedPlaylist.filter((mId) => mId !== movie.id);
-      console.log(`${updatedPlaylist} removed`);
-      console.log(`Playlist is now ${updatedPlaylist}`);
+      console.log(`${movie.title} removed from playlist. Playlist is now ${updatedPlaylist}`);
     } else {
       updatedPlaylist.push(movie.id);
-      console.log(`${updatedPlaylist} added`);
-      console.log(`Playlist is now ${updatedPlaylist}`);
+      console.log(`${movie.title} added to playlist. Playlist is now ${updatedPlaylist}`);
     }
     setPlaylist(updatedPlaylist);
   };
@@ -65,6 +62,8 @@ export const MoviesContextProvider = (props) => {
 
   const resetMoviesContext = () => {
     setFavourites([]);
+    setPlaylist([]);
+    setFavouritePeople([]);
   };
 
   return (
@@ -81,6 +80,9 @@ export const MoviesContextProvider = (props) => {
         favouritePeople,
         addToFavouritePeople,
         resetMoviesContext,
+        setFavourites,
+        setPlaylist,
+        setFavouritePeople,
       }}
     >
       {props.children}

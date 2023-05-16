@@ -113,7 +113,6 @@ const MoviesUpcomingPage = () => {
         movieList.sort(sort_by('title', false, (a) => a.toUpperCase()));
         break;
       case "title-desc":
-        console.log("Home Page - Sort Switch - title-desc");
         movieList.sort(sort_by('title', true, (a) => a.toUpperCase()));
         break;
       case "vote_average-asc":

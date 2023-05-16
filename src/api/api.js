@@ -230,7 +230,7 @@ export const authenticateAccount = async (email, password) => {
 };
 
 export const getAccount = async (email) => {
-  console.log("getAccount called");
+  //console.log("getAccount called");
     const response = await fetch(`/api/accounts/getaccount/${email}`, {
       headers: {
         "Content-Type": "application/json",
@@ -238,33 +238,14 @@ export const getAccount = async (email) => {
       method: "GET",
     });
     const data = await response.json();
-    console.log("getAccount called");
+    //console.log("getAccount called");
     console.log(data);
     return data;
   };
 
-//----------------
-//----------------
-
-
-
-/*export const addFavourite = async (movieId) => {
-  const token = localStorage.getItem("token");
-  const res = await fetch("/api/accounts/:id/favourites", {
-    headers: {"Content-Type": "application/json", 
-    Authorization: `Bearer ${token}`,
-    },
-    method: "POST",
-    body: JSON.stringify({
-      movieId: movieId,
-    }),
-  });
-  return await res.json();
-};*/
-
-export const addFavourite = async (movieId, email) => {
+export const updateFavourites = async (movieId, email) => {
   try {
-    const response = await fetch(`/api/accounts/${email}/favourites`, {
+    const response = await fetch(`/api/accounts/updatefavourites/${email}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -274,6 +255,38 @@ export const addFavourite = async (movieId, email) => {
     const data = await response.json();
     return { ok: response.ok, data };
   } catch (error) {
-    throw new Error("Failed to add favorite movie: " + error.message);
+    throw new Error("Failed to update favourite movies: " + error.message);
+  }
+};
+
+export const updatePlaylist = async (movieId, email) => {
+  try {
+    const response = await fetch(`/api/accounts/updateplaylist/${email}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ movieId, email }),
+    });
+    const data = await response.json();
+    return { ok: response.ok, data };
+  } catch (error) {
+    throw new Error("Failed to update playlist: " + error.message);
+  }
+};
+
+export const updateFavouritePeople = async (person, email) => {
+  try {
+    const response = await fetch(`/api/accounts/updatefavouritepeople/${email}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ person, email }),
+    });
+    const data = await response.json();
+    return { ok: response.ok, data };
+  } catch (error) {
+    throw new Error("Failed to update favourite people: " + error.message);
   }
 };

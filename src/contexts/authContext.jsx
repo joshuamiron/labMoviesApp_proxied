@@ -1,6 +1,7 @@
 import React, { useState, createContext, useContext } from "react";
 import { authenticateAccount, createAccount, getAccount } from "../api/api";
-  
+import { MoviesContext } from "./moviesContext";
+
 export const AuthContext = createContext(null);
 
 const AuthContextProvider = (props) => {
@@ -11,6 +12,7 @@ const AuthContextProvider = (props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [id, setAccountId] = useState("");
+  const moviesContext = useContext(MoviesContext);
 
   //Function to put JWT token in local storage.
   const setToken = (data) => {
@@ -31,6 +33,9 @@ const AuthContextProvider = (props) => {
       setLastName(user.lastName);
       setAccountId(user.id);
       // Set favourites in MoviesContext
+      moviesContext.setFavourites(user.favourites);
+      moviesContext.setPlaylist(user.playlist);
+      moviesContext.setFavouritePeople(user.favouritepeople);
     }
 };
 
@@ -40,6 +45,7 @@ const AuthContextProvider = (props) => {
   };
 
   const signout = () => {
+    moviesContext.resetMoviesContext();
     setTimeout(() => setIsAuthenticated(false), 100);
     setEmail("");
     setFirstName("");

@@ -22,7 +22,6 @@ const styles = {
 
 export default function MovieReviews({ movie }) {
   const [reviews, setReviews] = useState([]);
-  console.log(reviews);
 
   useEffect(() => {
     getMovieReviews(movie.id).then((reviews) => {

@@ -21,7 +21,7 @@ const nameFiltering = {
 
 const PeopleFavouritePage = () => {
   const { favouritePeople: personIds } = useContext(MoviesContext);
-  console.log(personIds);
+  console.log("Favourite people are " + personIds);
 
   const { filterValues, setFilterValues, filterFunction } = useFiltering(
     [],
@@ -37,7 +37,6 @@ const PeopleFavouritePage = () => {
       };
     })
   );
-  console.log(personIds);
 
   // Check if any of the parallel queries is still loading.
   const isLoading = favouritePeopleQueries.find((p) => p.isLoading === true);

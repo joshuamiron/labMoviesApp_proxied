@@ -22,7 +22,7 @@ const nameFiltering = {
 
 const TVShowFavouritePage = () => {
   const { favouriteTVShows: tvIds } = useContext(MoviesContext);
-  console.log(tvIds);
+  console.log("Favourite TV Shows are " + tvIds);
 
   const { filterValues, setFilterValues, filterFunction } = useFiltering(
     [],

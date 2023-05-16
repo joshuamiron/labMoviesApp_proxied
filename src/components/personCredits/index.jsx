@@ -17,15 +17,12 @@ const PersonCredits = ({ person }) => {
   
   useEffect(() => {
     getPersonCredits(person.id).then((credits) => {
-        console.log("Response from getPersonCredits:", credits);
         setPersonCredits(credits);
       })
       .catch((error) => {
         console.error("Error in getPersonCredits:", error);
       });
   }, [person.id]);
-
-  console.log("personCredits:", personCredits);
 
   return (
     <>

@@ -25,7 +25,6 @@ const MovieHeader = (props) => {
   } else {
     movie.favourite = false;
   }
-  console.log(favourites);
 
   return (
     <Paper component="div" sx={styles.root}>

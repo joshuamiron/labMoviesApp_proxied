@@ -46,9 +46,11 @@ const App = ({ children }) => {
 
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+      <MoviesContextProvider>
         <AuthContextProvider>
-          <SiteHeader />
-          <MoviesContextProvider>
+
+
+            <SiteHeader />
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="*" element={<Navigate to="/" />} />
@@ -75,8 +77,9 @@ const App = ({ children }) => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignUpPage />} />
             </Routes>
+            </AuthContextProvider>
           </MoviesContextProvider>
-        </AuthContextProvider>
+
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

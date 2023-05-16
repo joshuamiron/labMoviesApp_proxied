@@ -15,7 +15,6 @@ const styles = {
 
 const TVShowHeader = (props) => {
   const tv = props.tv;
-  console.log(tv);
 
   return (
     <Paper component="div" sx={styles.root}>

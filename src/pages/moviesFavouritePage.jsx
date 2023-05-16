@@ -41,7 +41,7 @@ const releaseYearFiltering = {
 
 const MoviesFavouritePage = () => {
   const { favourites: movieIds } = useContext(MoviesContext);
-  console.log(movieIds);
+  console.log("Favourites are " + movieIds);
 
   const { filterValues, setFilterValues, filterFunction } = useFiltering(
     [],

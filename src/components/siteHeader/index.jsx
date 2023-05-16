@@ -18,6 +18,7 @@ import Stack from "@mui/material/Stack";
 import { grey, blue } from "@mui/material/colors";
 
 import { AuthContext } from "../../contexts/authContext";
+
 import LoginModal from "../accountLoginModal";
 import SignUpModal from "../accountSignUpModal";
 

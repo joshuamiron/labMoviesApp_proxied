@@ -5,12 +5,15 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 import { MoviesContext } from "../../contexts/moviesContext";
 import { AuthContext } from "../../contexts/authContext";
-import { addFavourite } from '../../api/api'; // Import the addFavourite API call
+import { updateFavourites } from '../../api/api'; // Import the updateFavourites API call
 
 const AddToFavouritesIcon = ({ movie }) => {
   const {isAuthenticated, email } = useContext(AuthContext);
   const context = useContext(MoviesContext);
-  console.log("Card Icons: email is " + email);
+
+  // ------------------------------------------------------------
+  // --- From when I was just storing everything in local context
+  // ------------------------------------------------------------
 
   /* const onUserSelect = (e) => {
     e.preventDefault();
@@ -24,16 +27,15 @@ const AddToFavouritesIcon = ({ movie }) => {
       return;
     }
     const movieId = movie.id;
-    console.log("Card Icons movieId: " + movieId + " and email: " + email);
     try {
-      const response = await addFavourite(movieId, email);
+      const response = await updateFavourites (movieId, email);
       if (response.ok) {
-        console.log("Favorite movies updated successfully:", response.data);
+        console.log("Favorite movies updated:", response.data);
         if (isMovieFavourited) {
-          console.log("Favourite movie removed successfully:", response.data);
+          console.log("Favourite movie removed:", response.data);
           context.addToFavourites(movie);
         } else {
-          console.log("Favourite movie added successfully:", response.data);
+          console.log("Favourite movie added:", response.data);
           context.addToFavourites(movie);
         }
       } else {
