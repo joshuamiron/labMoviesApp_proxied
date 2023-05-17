@@ -27,6 +27,7 @@ const AddToFavouritesIcon = ({ movie }) => {
       return;
     }
     const movieId = movie.id;
+    console.log("Add to favourites button: " + movieId + " and email: " + email);
     try {
       const response = await updateFavourites (movieId, email);
       if (response.ok) {

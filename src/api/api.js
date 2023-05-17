@@ -230,7 +230,6 @@ export const authenticateAccount = async (email, password) => {
 };
 
 export const getAccount = async (email) => {
-  //console.log("getAccount called");
     const response = await fetch(`/api/accounts/getaccount/${email}`, {
       headers: {
         "Content-Type": "application/json",
@@ -238,7 +237,6 @@ export const getAccount = async (email) => {
       method: "GET",
     });
     const data = await response.json();
-    //console.log("getAccount called");
     console.log(data);
     return data;
   };

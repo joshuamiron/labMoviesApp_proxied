@@ -17,6 +17,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import { MoviesContext } from "../../contexts/moviesContext";
 import genres from "./genreCategories"; //need to add this from real genres endpoint
+//import { getGenres } from "../../api/api";
 import productionCompanies from "./productionCompanies"; //need to figure out how to create a production companies endpoint
 
 const styles = {
