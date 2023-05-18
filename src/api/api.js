@@ -12,6 +12,7 @@ export const getMovies = async (page = 1) => {
 };
 
 export const getMovie = async (args) => {
+  console.log("getMovie called in api");
   const [, idPart] = args.queryKey;
   const { id } = idPart;
   const res = await fetch(`/api/movies/${id}`, {

@@ -48,8 +48,6 @@ const App = ({ children }) => {
       <BrowserRouter>
       <MoviesContextProvider>
         <AuthContextProvider>
-
-
             <SiteHeader />
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -64,7 +62,7 @@ const App = ({ children }) => {
 
               <Route path="/movies/myplaylist" element={<PrivateRoute><MyPlaylistPage /></PrivateRoute>} />
               <Route path="/movies/favourites" element={<PrivateRoute><MoviesFavouritePage /></PrivateRoute>} />
-              <Route path="/movies/mymadeupmovies" element={<PrivateRoute><MyMadeupMoviesPage /></PrivateRoute>} />
+              <Route path="/movies/mymadeupmovies" element={<MyMadeupMoviesPage />} />
               <Route path="/people/favourites" element={<PrivateRoute><PeopleFavouritePage /></PrivateRoute>} />
               
               <Route path="/people/trending" element={<PeopleTrendingPage />} />
@@ -79,7 +77,6 @@ const App = ({ children }) => {
             </Routes>
             </AuthContextProvider>
           </MoviesContextProvider>
-
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

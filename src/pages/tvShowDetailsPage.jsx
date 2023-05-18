@@ -9,7 +9,6 @@ import Spinner from '../components/spinner';
 
 const TVShowDetailsPage = () => {
   const { id } = useParams();
-  //  const [movie] = useMovie(id);
 
   const { data: tv, error, isLoading, isError } = useQuery(
     ["tv", { id: id }],

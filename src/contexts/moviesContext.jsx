@@ -64,6 +64,7 @@ export const MoviesContextProvider = (props) => {
     setFavourites([]);
     setPlaylist([]);
     setFavouritePeople([]);
+    setMyMadeupMovies([]);
   };
 
   return (
@@ -83,6 +84,7 @@ export const MoviesContextProvider = (props) => {
         setFavourites,
         setPlaylist,
         setFavouritePeople,
+        setMyMadeupMovies,
       }}
     >
       {props.children}

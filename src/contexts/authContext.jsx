@@ -36,6 +36,7 @@ const AuthContextProvider = (props) => {
       moviesContext.setFavourites(user.favourites);
       moviesContext.setPlaylist(user.playlist);
       moviesContext.setFavouritePeople(user.favouritepeople);
+      moviesContext.setMyMadeupMovies(user.madeupmovies);
     }
 };
 

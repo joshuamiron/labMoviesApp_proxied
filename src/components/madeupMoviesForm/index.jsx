@@ -17,7 +17,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import { MoviesContext } from "../../contexts/moviesContext";
 import genres from "./genreCategories"; //need to add this from real genres endpoint
-//import { getGenres } from "../../api/api";
 import productionCompanies from "./productionCompanies"; //need to figure out how to create a production companies endpoint
 
 const styles = {
@@ -50,7 +49,7 @@ const MadeupMoviesForm = () => {
   const navigate = useNavigate();
   const context = useContext(MoviesContext);
   const [genre, setGenre] = useState(3);
-  const [productionCompany, setProductionCompany] = useState(3);
+  const [productioncompany, setProductionCompany] = useState(3);
 
   const [open, setOpen] = useState(false);
 
@@ -67,13 +66,13 @@ const MadeupMoviesForm = () => {
     navigate("/movies/mymadeupmoviespage");
   };
 
-  const onSubmit = (madeupMovie) => {
+  const onSubmit = async (madeupMovie) => {
     madeupMovie.genre = genre;
-    madeupMovie.productionCompany = productionCompany;
-    context.addMadeupMovie(madeupMovie);
-    console.log("Form page says: ");
-    console.log(madeupMovie);
+    madeupMovie.productioncompany = productioncompany;
+    await context.addMadeupMovie(madeupMovie);
+    console.log("Form page says: " + madeupMovie);
     setOpen(true);
+    navigate("/movies/mymadeupmoviespage");
   };
 
   return (
@@ -115,7 +114,6 @@ const MadeupMoviesForm = () => {
                 label="Movie title"
                 id="title"
                 autoFocus
-                helperText="Title is required"
               />
             )}
           />
@@ -215,7 +213,7 @@ const MadeupMoviesForm = () => {
                 sx={{ width: "40ch" }}
                 variant="outlined"
                 label="Production company"
-                value={productionCompany}
+                value={productioncompany}
                 onChange={handleProductionCompanyChange}
 
               >
