@@ -11,9 +11,9 @@ import Typography from "@mui/material/Typography";
 
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { MoviesContext } from "../../contexts/moviesContext";
 import { AuthContext } from "../../contexts/authContext";
@@ -22,7 +22,6 @@ import { addMadeUpMovie } from "../../api/api";
 //import { getGenres } from "../../api/api";
 import genres from "./genreCategories"; //need to add this from real genres endpoint
 import productionCompanies from "./productionCompanies"; //need to figure out how to create a production companies endpoint
-
 
 const styles = {
   root: { maxWidth: 345 },
@@ -37,7 +36,7 @@ const styles = {
 const MadeupMoviesForm = () => {
   const { email } = useContext(AuthContext);
   const context = useContext(MoviesContext);
-  
+
   //---------- Set initial values for the form
   const defaultValues = {
     title: "",
@@ -75,21 +74,21 @@ const MadeupMoviesForm = () => {
 
   const onSubmit = async (madeupMovieData) => {
     madeupMovieData = { ...madeupMovieData, genre, productioncompany };
-try {
-  const response = await addMadeUpMovie(madeupMovieData, email);
-  console.log("Form page says: ", madeupMovieData);
-  if (response.ok) {
-    context.addMadeupMovie(madeupMovieData);
-    setOpen(true);
-    navigate("/movies/mymadeupmovies");  
-  } else {
-    console.log(response.data.message);
-    console.log("what's happening here?");
-  }
-} catch (error) {
-  console.log(error);
-  console.log("API call error");
-}
+    try {
+      const response = await addMadeUpMovie(madeupMovieData, email);
+      console.log("Form page says: ", madeupMovieData);
+      if (response.ok) {
+        context.addMadeupMovie(response.addedMovie);
+        console.log(response.addedMovie);
+        setOpen(true);
+        navigate("/movies/mymadeupmovies");
+      } else {
+        console.log(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      console.log("API call error");
+    }
   };
 
   return (
@@ -104,11 +103,7 @@ try {
           open={open}
           onClose={handleSnackClose}
         >
-          <Alert
-            severity="success"
-            variant="filled"
-            onClose={handleSnackClose}
-          >
+          <Alert severity="success" variant="filled" onClose={handleSnackClose}>
             <Typography variant="h4">
               Your made-up movie has been created!
             </Typography>
@@ -135,7 +130,11 @@ try {
             )}
           />
           {errors.title && (
-            <Typography variant="subtitle2" component="p" style={{ color: "red" }}>
+            <Typography
+              variant="subtitle2"
+              component="p"
+              style={{ color: "red" }}
+            >
               {errors.title.message}
             </Typography>
           )}
@@ -164,7 +163,11 @@ try {
           />
           <br></br>
           {errors.overview && (
-            <Typography variant="subtitle2" component="p" style={{ color: "red" }}>
+            <Typography
+              variant="subtitle2"
+              component="p"
+              style={{ color: "red" }}
+            >
               {errors.overview.message}
             </Typography>
           )}
@@ -195,11 +198,15 @@ try {
             control={control}
             rules={{
               required: "Runtime is required.",
-              inputProps: { inputMode: 'numeric', pattern: '[0-9]*', message: "Runtime must be numbers" },
+              inputProps: {
+                inputMode: "numeric",
+                pattern: "[0-9]*",
+                message: "Runtime must be numbers",
+              },
             }}
             defaultValue=""
             render={({ field: { onChange, value } }) => (
-              <TextField  // this should be numeric entry only
+              <TextField // this should be numeric entry only
                 variant="outlined"
                 margin="normal"
                 required
@@ -209,13 +216,17 @@ try {
                 id="runtime"
                 label="Runtime"
                 helperText="In minutes, numbers only please"
-                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               />
             )}
           />
           <br></br>
           {errors.runtime && (
-            <Typography variant="subtitle2" component="p" style={{ color: "red" }}>
+            <Typography
+              variant="subtitle2"
+              component="p"
+              style={{ color: "red" }}
+            >
               {errors.runtime.message}
             </Typography>
           )}
@@ -232,7 +243,6 @@ try {
                 label="Production company"
                 value={productioncompany}
                 onChange={handleProductionCompanyChange}
-
               >
                 {productionCompanies.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -266,7 +276,11 @@ try {
           />
           <br></br>
           {errors.releasedate && (
-            <Typography variant="subtitle2" component="p" style={{ color: "red" }}>
+            <Typography
+              variant="subtitle2"
+              component="p"
+              style={{ color: "red" }}
+            >
               {errors.releasedate.message}
             </Typography>
           )}
@@ -301,4 +315,4 @@ try {
   );
 };
 
-export default MadeupMoviesForm; 
+export default MadeupMoviesForm;

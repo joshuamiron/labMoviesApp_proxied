@@ -297,24 +297,25 @@ export const addMadeUpMovie = async (madeupMovieData, email) => {
       headers: {
         "Content-Type": "application/json",
       },
-//      body: JSON.stringify({ madeupMovieData, email }),
         body: JSON.stringify(madeupMovieData),
       });
     const data = await response.json();
-    return { ok: response.ok, data };
+    const { account, addedMovie } = data;
+    console.log(data);
+    return { ok: response.ok, account, addedMovie };
   } catch (error) {
     throw new Error("Failed to add made up movie: " + error.message);
   }
 };
 
-export const deleteMadeUpMovie = async (movieId, email) => {
+export const deleteMadeUpMovie = async (movieId) => {
   try {
-    const response = await fetch(`/api/accounts/deletemadeupmovie/${email}`, {
+    const response = await fetch(`/api/accounts/deletemadeupmovie/${movieId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ movieId, email }),
+      body: JSON.stringify({ movieId }),
     });
     const data = await response.json();
     return { ok: response.ok, data };

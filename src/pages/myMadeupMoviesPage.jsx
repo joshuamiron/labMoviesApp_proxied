@@ -18,6 +18,8 @@ import MyMadeupMoviesForm from "../components/madeupMoviesForm";
 import genres from "../components/madeupMoviesForm/genreCategories"; //need to add this from real genres endpoint
 import productionCompanies from "../components/madeupMoviesForm/productionCompanies"; //need to figure out how to create a production companies endpoint
 import { MoviesContext } from "../contexts/moviesContext";
+import { AuthContext } from "../contexts/authContext";
+import { deleteMadeUpMovie } from "../api/api";
 
 const styles = {
   root: {
@@ -70,10 +72,24 @@ const MyMadeupMoviesPage = () => {
   const context = useContext(MoviesContext);
 
   //------ pass the selected movie ID to MoviesContext to filter it out of the array and update the array
-  const handleDelete = (madeupMovie) => {
+  /* const handleDelete = (madeupMovie) => {
     context.deleteMadeupMovie(madeupMovie.id);
+  };*/
+  
+  const handleDelete = async (movieId) => {
+    try {
+      const response = await deleteMadeUpMovie(movieId);
+      if (response.ok) {
+        context.deleteMadeupMovie(movieId);
+      } else {
+        console.log("Failed to delete movie.");
+      }
+    } catch (error) {
+      console.log("API call error:", error);
+    }
   };
 
+  
   //------ If there are no made up movies in the array in moviesContext
   if (madeupMovies.length === 0) {
     return (
@@ -114,7 +130,7 @@ const MyMadeupMoviesPage = () => {
           {madeupMovies.map(movie => (
             <React.Fragment key={movie.id}>
               <ListItem alignItems="flex-start" secondaryAction={
-                <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(movie)} >
+                <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(movie.id)} >
                   <DeleteIcon color="secondary" />
                 </IconButton>
               }>
