@@ -289,3 +289,36 @@ export const updateFavouritePeople = async (person, email) => {
     throw new Error("Failed to update favourite people: " + error.message);
   }
 };
+
+export const addMadeUpMovie = async (madeupMovieData, email) => {
+  try {
+    const response = await fetch(`/api/accounts/addmadeupmovie/${email}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+//      body: JSON.stringify({ madeupMovieData, email }),
+        body: JSON.stringify(madeupMovieData),
+      });
+    const data = await response.json();
+    return { ok: response.ok, data };
+  } catch (error) {
+    throw new Error("Failed to add made up movie: " + error.message);
+  }
+};
+
+export const deleteMadeUpMovie = async (movieId, email) => {
+  try {
+    const response = await fetch(`/api/accounts/deletemadeupmovie/${email}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ movieId, email }),
+    });
+    const data = await response.json();
+    return { ok: response.ok, data };
+  } catch (error) {
+    throw new Error("Failed to delete made up movie: " + error.message);
+  }
+};

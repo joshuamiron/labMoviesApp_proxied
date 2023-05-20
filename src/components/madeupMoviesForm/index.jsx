@@ -16,8 +16,13 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import { MoviesContext } from "../../contexts/moviesContext";
+import { AuthContext } from "../../contexts/authContext";
+import { addMadeUpMovie } from "../../api/api";
+
+//import { getGenres } from "../../api/api";
 import genres from "./genreCategories"; //need to add this from real genres endpoint
 import productionCompanies from "./productionCompanies"; //need to figure out how to create a production companies endpoint
+
 
 const styles = {
   root: { maxWidth: 345 },
@@ -30,13 +35,17 @@ const styles = {
 };
 
 const MadeupMoviesForm = () => {
+  const { email } = useContext(AuthContext);
+  const context = useContext(MoviesContext);
+  
   //---------- Set initial values for the form
   const defaultValues = {
-    id: "",
+    title: "",
     overview: "",
-    agree: false,
-    releasedate: "",
+    //genre: 0,
     runtime: "",
+    releasedate: "",
+    //productioncompany: 0,
   };
 
   const {
@@ -47,10 +56,8 @@ const MadeupMoviesForm = () => {
   } = useForm(defaultValues);
 
   const navigate = useNavigate();
-  const context = useContext(MoviesContext);
-  const [genre, setGenre] = useState(3);
-  const [productioncompany, setProductionCompany] = useState(3);
-
+  const [genre, setGenre] = useState(0);
+  const [productioncompany, setProductionCompany] = useState(0);
   const [open, setOpen] = useState(false);
 
   const handleGenreChange = (event) => {
@@ -63,16 +70,26 @@ const MadeupMoviesForm = () => {
 
   const handleSnackClose = (event) => {
     setOpen(false);
-    navigate("/movies/mymadeupmoviespage");
+    navigate("/movies/mymadeupmovies");
   };
 
-  const onSubmit = async (madeupMovie) => {
-    madeupMovie.genre = genre;
-    madeupMovie.productioncompany = productioncompany;
-    await context.addMadeupMovie(madeupMovie);
-    console.log("Form page says: " + madeupMovie);
+  const onSubmit = async (madeupMovieData) => {
+    madeupMovieData = { ...madeupMovieData, genre, productioncompany };
+try {
+  const response = await addMadeUpMovie(madeupMovieData, email);
+  console.log("Form page says: ", madeupMovieData);
+  if (response.ok) {
+    context.addMadeupMovie(madeupMovieData);
     setOpen(true);
-    navigate("/movies/mymadeupmoviespage");
+    navigate("/movies/mymadeupmovies");  
+  } else {
+    console.log(response.data.message);
+    console.log("what's happening here?");
+  }
+} catch (error) {
+  console.log(error);
+  console.log("API call error");
+}
   };
 
   return (
