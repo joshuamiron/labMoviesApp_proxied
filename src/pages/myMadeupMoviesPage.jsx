@@ -71,28 +71,8 @@ const MyMadeupMoviesPage = () => {
   const { madeupMovies } = useContext(MoviesContext); // Get the current array of madeupMovies from moviesContext
   const context = useContext(MoviesContext);
 
-  //------ pass the selected movie ID to MoviesContext to filter it out of the array and update the array
-  /* const handleDelete = (madeupMovie) => {
-    context.deleteMadeupMovie(madeupMovie.id);
-  };*/
-  
-  /*const handleDelete = async (movieid, email) => {
-    console.log("myMadeupMoviesPage handleDelete:", movieid, email);
-    console.log("Movie ID:", movie.id);
-    try {
-      const response = await deleteMadeUpMovie(movieid, email);
-      if (response.ok) {
-        context.deleteMadeupMovie(movieid);
-      } else {
-        console.log("Failed to delete movie.");
-      }
-    } catch (error) {
-      console.log("API call error:", error);
-    }
-  };*/
-
+  //------ pass the selected movie ID to API; is response OK, pass to MoviesContext to filter it out of the array and update the array
   const handleDelete = async (movie, email) => {
-    console.log("myMadeupMoviesPage handleDelete:", movie, email);
     try {
       const response = await deleteMadeUpMovie(movie, email);
       if (response.ok) {
@@ -104,7 +84,6 @@ const MyMadeupMoviesPage = () => {
       console.log("API call error:", error);
     }
   };
-
   
   //------ If there are no made up movies in the array in moviesContext
   if (madeupMovies.length === 0) {

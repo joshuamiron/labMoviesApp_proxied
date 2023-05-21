@@ -18,7 +18,6 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { MoviesContext } from "../../contexts/moviesContext";
 import { AuthContext } from "../../contexts/authContext";
 import { addMadeUpMovie } from "../../api/api";
-
 //import { getGenres } from "../../api/api";
 import genres from "./genreCategories"; //need to add this from real genres endpoint
 import productionCompanies from "./productionCompanies"; //need to figure out how to create a production companies endpoint
@@ -72,7 +71,6 @@ const MadeupMoviesForm = () => {
     madeupMovieData = { ...madeupMovieData, genre, productioncompany };
     try {
       const response = await addMadeUpMovie({madeupMovieData}, email);
-      console.log("Form page says: ", madeupMovieData);
       if (response.ok) {
         context.addMadeupMovie(response.data);
         console.log("Response OK:", response.data);

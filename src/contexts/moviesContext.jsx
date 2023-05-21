@@ -50,19 +50,9 @@ export const MoviesContextProvider = (props) => {
 
   const addMadeupMovie = (movie) => {
     console.log("Movies context says:", madeupMovies);
-    //const newId = madeupMovies.length + 1;
-    //const newMovie = { ...movie, id: newId };
     madeupMovies.push(movie);
     setMyMadeupMovies(madeupMovies);
   };
-
- /* const deleteMadeupMovie = (movieId) => {
-    console.log("Movies context says movieId:", movieId);
-    console.log("Movies context says madeupMovies:", madeupMovies);
-    const updatedMadeupMovies = madeupMovies.filter(movie => movie.id !== movieId);
-    setMyMadeupMovies(updatedMadeupMovies);
-    console.log("Movies context says updated movies", updatedMadeupMovies);
-  };*/
 
   const deleteMadeupMovie = (movieId) => {
     console.log("Movies context says movieId:", movieId);

@@ -1,7 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Button from '@mui/material/Button';
+import { Typography } from "@mui/material";
+import Link from '@mui/material/Link';
 
 import { MoviesContext } from "../../contexts/moviesContext";
 import { AuthContext } from "../../contexts/authContext";
@@ -10,6 +17,9 @@ import { updateFavouritePeople } from '../../api/api'; // Import the updateFavou
 const AddToFavouritePeopleIcon = ({ person }) => {
   const {isAuthenticated, email } = useContext(AuthContext);
   const context = useContext(MoviesContext);
+  const [open, setOpen] = useState(false); // State to control the visibility of the popup
+  const handleOpen = () => { setOpen(true); };
+  const handleClose = () => { setOpen(false); };
 
    // ------------------------------------------------------------
   // --- From when I was just storing everything in local context
@@ -23,7 +33,8 @@ const AddToFavouritePeopleIcon = ({ person }) => {
   const onUserSelect = async (e) => {
     e.preventDefault();
     if (!isAuthenticated) {
-      console.log("User not logged in. Handle error or show login prompt.");
+      console.log("User not logged in.");
+      handleOpen();
       return;
     }
     const personId = person.id;
@@ -54,6 +65,7 @@ const AddToFavouritePeopleIcon = ({ person }) => {
 
   //---- If the person is in the favourites list, show the remove button. Otherwise show the add button.
   return (
+    <>
     <IconButton aria-label="add to favorites" onClick={onUserSelect}>
       {isPersonFavourited ? (
         <FavoriteIcon color="secondary" fontSize="medium" />
@@ -61,6 +73,18 @@ const AddToFavouritePeopleIcon = ({ person }) => {
         <FavoriteBorderIcon color="primary" fontSize="medium" />
       )}
     </IconButton>
+    <Dialog open={open} onClose={handleClose}>
+    <DialogTitle>You must sign in</DialogTitle>
+    <DialogContent>
+      <Typography>
+      Please{" "}<Link href="/login" underline="hover">sign in</Link>{" "}to add people to your favorites.
+      </Typography>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={handleClose} color="primary" autoFocus>Close</Button>
+    </DialogActions>
+  </Dialog>
+  </>
   );
 };
 
