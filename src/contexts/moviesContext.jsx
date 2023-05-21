@@ -49,16 +49,28 @@ export const MoviesContextProvider = (props) => {
   };
 
   const addMadeupMovie = (movie) => {
-    const newId = madeupMovies.length + 1;
-    const newMovie = { ...movie, id: newId };
-    madeupMovies.push(newMovie);
+    console.log("Movies context says:", madeupMovies);
+    //const newId = madeupMovies.length + 1;
+    //const newMovie = { ...movie, id: newId };
+    madeupMovies.push(movie);
     setMyMadeupMovies(madeupMovies);
   };
 
-  const deleteMadeupMovie = (movieId) => {
+ /* const deleteMadeupMovie = (movieId) => {
+    console.log("Movies context says movieId:", movieId);
+    console.log("Movies context says madeupMovies:", madeupMovies);
     const updatedMadeupMovies = madeupMovies.filter(movie => movie.id !== movieId);
     setMyMadeupMovies(updatedMadeupMovies);
-  };
+    console.log("Movies context says updated movies", updatedMadeupMovies);
+  };*/
+
+  const deleteMadeupMovie = (movieId) => {
+    console.log("Movies context says movieId:", movieId);
+    console.log("Movies context says madeupMovies:", madeupMovies);
+    const updatedMadeupMovies = madeupMovies.filter(movie => movie._id !== movieId);
+    setMyMadeupMovies(updatedMadeupMovies);
+    console.log("Movies context says updated movies", updatedMadeupMovies);
+  };  
 
   const resetMoviesContext = () => {
     setFavourites([]);
@@ -75,8 +87,8 @@ export const MoviesContextProvider = (props) => {
         addReview,
         playlist,
         addToPlaylist,
-        addMadeupMovie,
         madeupMovies,
+        addMadeupMovie,
         deleteMadeupMovie,
         favouritePeople,
         addToFavouritePeople,

@@ -290,32 +290,31 @@ export const updateFavouritePeople = async (person, email) => {
   }
 };
 
-export const addMadeUpMovie = async (madeupMovieData, email) => {
+export const addMadeUpMovie = async ({madeupMovieData}, email) => {
   try {
     const response = await fetch(`/api/accounts/addmadeupmovie/${email}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-        body: JSON.stringify(madeupMovieData),
+        body: JSON.stringify({madeupMovieData}),
       });
     const data = await response.json();
-    const { account, addedMovie } = data;
-    console.log(data);
-    return { ok: response.ok, account, addedMovie };
+    return { ok: response.ok, data };
   } catch (error) {
     throw new Error("Failed to add made up movie: " + error.message);
   }
 };
 
-export const deleteMadeUpMovie = async (movieId) => {
+export const deleteMadeUpMovie = async (movieid, email) => {
+  console.log("deleteMadeUpMovie:", email, movieid);
   try {
-    const response = await fetch(`/api/accounts/deletemadeupmovie/${movieId}`, {
+    const response = await fetch(`/api/accounts/deletemadeupmovie/${email}/${movieid}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ movieId }),
+      body: JSON.stringify({ movieid, email }),
     });
     const data = await response.json();
     return { ok: response.ok, data };

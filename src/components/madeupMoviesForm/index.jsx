@@ -48,11 +48,7 @@ const MadeupMoviesForm = () => {
   };
 
   const {
-    control,
-    formState: { errors },
-    handleSubmit,
-    reset,
-  } = useForm(defaultValues);
+    control, formState: { errors }, handleSubmit, reset, } = useForm(defaultValues);
 
   const navigate = useNavigate();
   const [genre, setGenre] = useState(0);
@@ -75,11 +71,11 @@ const MadeupMoviesForm = () => {
   const onSubmit = async (madeupMovieData) => {
     madeupMovieData = { ...madeupMovieData, genre, productioncompany };
     try {
-      const response = await addMadeUpMovie(madeupMovieData, email);
+      const response = await addMadeUpMovie({madeupMovieData}, email);
       console.log("Form page says: ", madeupMovieData);
       if (response.ok) {
-        context.addMadeupMovie(response.addedMovie);
-        console.log(response.addedMovie);
+        context.addMadeupMovie(response.data);
+        console.log("Response OK:", response.data);
         setOpen(true);
         navigate("/movies/mymadeupmovies");
       } else {

@@ -66,9 +66,9 @@ const getProductionCompanyName = (productionCompanyId) => {
 };
 
 const MyMadeupMoviesPage = () => {
+  const { email } = useContext(AuthContext);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { madeupMovies } = useContext(MoviesContext); // Get the current array of madeupMovies from moviesContext
-
   const context = useContext(MoviesContext);
 
   //------ pass the selected movie ID to MoviesContext to filter it out of the array and update the array
@@ -76,11 +76,27 @@ const MyMadeupMoviesPage = () => {
     context.deleteMadeupMovie(madeupMovie.id);
   };*/
   
-  const handleDelete = async (movieId) => {
+  /*const handleDelete = async (movieid, email) => {
+    console.log("myMadeupMoviesPage handleDelete:", movieid, email);
+    console.log("Movie ID:", movie.id);
     try {
-      const response = await deleteMadeUpMovie(movieId);
+      const response = await deleteMadeUpMovie(movieid, email);
       if (response.ok) {
-        context.deleteMadeupMovie(movieId);
+        context.deleteMadeupMovie(movieid);
+      } else {
+        console.log("Failed to delete movie.");
+      }
+    } catch (error) {
+      console.log("API call error:", error);
+    }
+  };*/
+
+  const handleDelete = async (movie, email) => {
+    console.log("myMadeupMoviesPage handleDelete:", movie, email);
+    try {
+      const response = await deleteMadeUpMovie(movie, email);
+      if (response.ok) {
+        context.deleteMadeupMovie(movie);
       } else {
         console.log("Failed to delete movie.");
       }
@@ -128,9 +144,9 @@ const MyMadeupMoviesPage = () => {
         </Grid>
         <List sx={styles.list} >
           {madeupMovies.map(movie => (
-            <React.Fragment key={movie.id}>
+            <React.Fragment key={movie._id}>
               <ListItem alignItems="flex-start" secondaryAction={
-                <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(movie.id)} >
+                <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(movie._id, email)} >
                   <DeleteIcon color="secondary" />
                 </IconButton>
               }>
