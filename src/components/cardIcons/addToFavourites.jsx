@@ -18,9 +18,7 @@ const AddToFavouritesIcon = ({ movie }) => {
   const {isAuthenticated, email } = useContext(AuthContext);
   const context = useContext(MoviesContext);
   const [open, setOpen] = useState(false); // State to control the visibility of the popup
-
   const handleOpen = () => { setOpen(true); };
-
   const handleClose = () => { setOpen(false); };
 
   // ------------------------------------------------------------

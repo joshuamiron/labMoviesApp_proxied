@@ -2,9 +2,10 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 import MovieDetails from "../components/movieDetails";
-import SimilarMovies from "../components/similarMovies";
-import MovieCredits from "../components/movieCredits";
 import AllMoviePosters from "../components/movieAllPosters"
+import MovieCredits from "../components/movieCredits";
+import SimilarMovies from "../components/similarMovies";
+import RecommendedMovies from "../components/recommendedMovies";
 import PageTemplate from "../components/templateMoviePage";
 import { getMovie } from '../api/api'
 import { useQuery } from "react-query";
@@ -38,6 +39,8 @@ const MovieDetailsPage = () => {
             <MovieCredits movie={movie} />
             <br></br>
             <SimilarMovies movie={movie} />
+            <br></br>
+            <RecommendedMovies movie={movie} />
           </PageTemplate>
         </>
       ) : (
