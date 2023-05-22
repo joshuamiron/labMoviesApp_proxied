@@ -17,21 +17,30 @@ const SignUpPage = (props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
-  const register = () => {
+  
+  const register = async () => {
+    setErrorMessage(""); // Reset the error message
     if (password.length > 0 && password === passwordAgain) {
-      console.log(firstName + " " + lastName + " registered successfully");
-      context.register(email, password, firstName, lastName);
-      setRegistered(true);
+      try {
+        const result = await context.register(email, password, firstName, lastName);
+        if (result.message === "Account already exists.") {
+          setErrorMessage(result.message);
+        } else {
+          setRegistered(true);
+          return <Navigate to="/login" />;
+        }
+      } catch (error) {
+        console.log("Registration error:", error);
+        setErrorMessage("Registration failed. Please try again.");
+      }
+    } else {
+      setErrorMessage("Passwords don't match. Please try again.");
     }
   };
   
-
   // const { from } = props.location.state || { from: { pathname: "/" } };
 
-  if (registered === true) {
-    //if (context.isAuthenticated === true) {
-    //}
+    if (registered === true) {
     return <Navigate to="/login" />;
   }
 
@@ -96,8 +105,11 @@ const SignUpPage = (props) => {
             onChange={(e) => setPasswordAgain(e.target.value)}
             style={{ width: "300px" }} // Set a fixed width for the text field
           />
-          <br />
-          {errorMessage && <Typography color="error">{errorMessage}</Typography>}
+          {errorMessage && (
+          <Typography color="error" variant="body1">
+            {errorMessage}
+            </Typography>
+            )}
           <br />
           <Button variant="outlined" onClick={register}>
             Create account

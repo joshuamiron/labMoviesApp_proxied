@@ -203,7 +203,7 @@ export const getTVShowImages = async (args) => {
 //--- Accounts (from Express API) ---//
 //-----------------------------------//
 
-export const createAccount = async (email, password, firstName, lastName) => {
+/* export const createAccount = async (email, password, firstName, lastName) => {
   const res = await fetch(`/api/accounts`, {
     headers: {
       "Content-Type": "application/json",
@@ -217,6 +217,32 @@ export const createAccount = async (email, password, firstName, lastName) => {
     }),
   });
   return await res.json();
+};*/
+
+export const createAccount = async (email, password, firstName, lastName) => {
+  try {
+    const res = await fetch(`/api/accounts`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+      }),
+    });
+
+    if (res.ok) {
+      return await res.json();
+    } else {
+      const errorResponse = await res.json();
+      throw new Error(errorResponse.error); // Throw an error with the server-side error message
+    }
+  } catch (error) {
+    throw new Error("Registration failed. Please try again."); // Throw a generic error message for other errors
+  }
 };
 
 export const authenticateAccount = async (email, password) => {

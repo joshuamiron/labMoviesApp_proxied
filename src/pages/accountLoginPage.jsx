@@ -9,7 +9,7 @@ import { Grid } from "@mui/material";
 import { AuthContext } from "../contexts/authContext";
 
 const LoginPage = (props) => {
-  const authContext = useContext(AuthContext);
+  const context = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -17,11 +17,11 @@ const LoginPage = (props) => {
   const login = async () => {
     setErrorMessage(""); // Reset the error message
     try {
-      const response = await authContext.authenticate(email, password); // Make the login request to the server
+      const result = await context.authenticate(email, password); // Make the login request to the server
       // If the response status is 401 (unauthorized), display the error message
       // This isn't working correctly for some reason - its going right to the catch block.
-      if (response.status === 401) {
-        setErrorMessage("Invalid email or password. Please try again.");
+      if (result.message === "Unauthorized") {
+        setErrorMessage(result.message);
       } else {
         // Login successful, redirect to the home page
         return <Navigate to={"/"} />;
@@ -40,7 +40,7 @@ const LoginPage = (props) => {
   // Either / or the protected path user tried to access.
   // const { from } = props.location.state || { from: { pathname: "/" } };
 
-   if (authContext.isAuthenticated === true) {
+   if (context.isAuthenticated === true) {
     return <Navigate to={"/"} />;
   }
 
