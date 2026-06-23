@@ -21,13 +21,14 @@ const AddToFavouriteTVShowsIcon = ({ tv }) => {
   const handleOpen = () => { setOpen(true); };
   const handleClose = () => { setOpen(false); };
   
-    const onUserSelect = async (e) => {
+  const onUserSelect = async (e) => {
     e.preventDefault();
     if (!isAuthenticated) {
       console.log("User not logged in.");
       handleOpen();
       return;
     }
+  };
 
   //---- Check if the show is already in the favourites list
   const isShowFavourited = context.favouriteShows.includes(tv.id);
